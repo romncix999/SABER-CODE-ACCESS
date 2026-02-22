@@ -1,112 +1,404 @@
 <!DOCTYPE html>
-<html lang="ar">
+<html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>تحويل النص إلى فيديو</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 0;
-            background-color: #f4f4f4;
-            text-align: center;
-        }
-        .container {
-            width: 80%;
-            max-width: 600px;
-            margin: 50px auto;
-            padding: 20px;
-            background-color: #fff;
-            border-radius: 10px;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-        }
-        h1 {
-            color: #333;
-        }
-        textarea {
-            width: 100%;
-            height: 100px;
-            padding: 10px;
-            border-radius: 5px;
-            border: 1px solid #ddd;
-            margin: 10px 0;
-            font-size: 16px;
-        }
-        button {
-            padding: 10px 20px;
-            border: none;
-            background-color: #4CAF50;
-            color: white;
-            font-size: 16px;
-            border-radius: 5px;
-            cursor: pointer;
-        }
-        button:hover {
-            background-color: #45a049;
-        }
-        .result {
-            margin-top: 20px;
-        }
-        iframe {
-            width: 100%;
-            height: 400px;
-            border: none;
-        }
-    </style>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta name="robots" content="noindex, nofollow" />
+<title>FTN 65 CODE</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700;900&family=Raleway:wght@300;400;500;600&display=swap" rel="stylesheet" />
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --g1:#f5e17a;--g2:#ffd700;--g3:#d4af37;
+  --bg:#060401;--glass:rgba(18,13,2,0.65);
+  --border:rgba(212,175,55,0.22);--text:#e8d98a;
+  --muted:rgba(212,175,55,0.42);
+  --ease:cubic-bezier(0.4,0,0.2,1);
+}
+html{font-size:16px}
+body{
+  min-height:100svh;
+  background:
+    radial-gradient(ellipse 80% 60% at 15% 10%,rgba(180,130,10,0.13) 0%,transparent 60%),
+    radial-gradient(ellipse 60% 50% at 85% 90%,rgba(212,175,55,0.09) 0%,transparent 55%),
+    #060401;
+  font-family:'Raleway',sans-serif;
+  color:var(--text);
+  display:flex;flex-direction:column;
+  align-items:center;justify-content:center;
+  overflow-x:hidden;position:relative;
+}
+
+/* CANVAS */
+#cvs{position:fixed;inset:0;z-index:0;pointer-events:none}
+
+/* ORBS */
+.orb{position:fixed;border-radius:50%;pointer-events:none;z-index:0;filter:blur(90px);animation:orbDrift 18s ease-in-out infinite}
+.orb-a{width:500px;height:500px;top:-160px;left:-160px;background:radial-gradient(circle,rgba(212,175,55,0.12),transparent 65%)}
+.orb-b{width:380px;height:380px;bottom:-120px;right:-120px;background:radial-gradient(circle,rgba(255,215,0,0.08),transparent 65%);animation-delay:-9s}
+@keyframes orbDrift{0%,100%{transform:translate(0,0)}33%{transform:translate(25px,-18px)}66%{transform:translate(-15px,20px)}}
+
+/* WRAP */
+.wrap{position:relative;z-index:1;width:100%;min-height:100svh;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:2rem 1.25rem 5rem}
+
+/* CARD */
+.card{
+  width:100%;max-width:460px;
+  background:var(--glass);
+  border:1px solid var(--border);
+  border-radius:26px;
+  padding:3rem 2.5rem 2.5rem;
+  backdrop-filter:blur(28px) saturate(1.4);
+  -webkit-backdrop-filter:blur(28px) saturate(1.4);
+  box-shadow:
+    0 0 0 1px rgba(212,175,55,0.06),
+    0 12px 48px rgba(0,0,0,0.7),
+    0 0 100px rgba(212,175,55,0.04),
+    inset 0 1px 0 rgba(255,255,255,0.055);
+  animation:cardIn 0.85s cubic-bezier(0.22,1,0.36,1) both;
+  position:relative;overflow:hidden;
+}
+.card::before{content:'';position:absolute;top:0;left:15%;right:15%;height:1px;background:linear-gradient(90deg,transparent,var(--g3) 40%,var(--g2) 60%,transparent);opacity:0.6}
+.card::after{content:'';position:absolute;inset:0;border-radius:26px;background:linear-gradient(160deg,rgba(255,215,0,0.025) 0%,transparent 50%);pointer-events:none}
+@keyframes cardIn{from{opacity:0;transform:translateY(36px) scale(0.97)}to{opacity:1;transform:translateY(0) scale(1)}}
+
+/* ICON */
+.icon-wrap{text-align:center;margin-bottom:1.6rem;animation:fadeUp 0.8s 0.15s both}
+.icon-ring{
+  display:inline-flex;align-items:center;justify-content:center;
+  width:70px;height:70px;border-radius:50%;
+  background:radial-gradient(circle at 38% 28%,rgba(255,215,0,0.18),rgba(212,175,55,0.04));
+  border:1px solid rgba(212,175,55,0.28);
+  animation:iconGlow 3.5s ease-in-out infinite;position:relative;
+}
+.icon-ring::after{content:'';position:absolute;inset:-4px;border-radius:50%;border:1px solid rgba(212,175,55,0.1);animation:iconGlow 3.5s ease-in-out infinite reverse}
+.icon-ring svg{width:34px;height:34px;position:relative;z-index:1}
+@keyframes iconGlow{0%,100%{box-shadow:0 0 20px rgba(212,175,55,0.15)}50%{box-shadow:0 0 50px rgba(255,215,0,0.4),0 0 18px rgba(212,175,55,0.2)}}
+
+/* TITLE */
+h1{
+  font-family:'Cinzel',serif;
+  font-size:clamp(1.75rem,7vw,2.5rem);
+  font-weight:900;text-align:center;
+  letter-spacing:0.07em;line-height:1.1;
+  background:linear-gradient(150deg,var(--g1) 0%,var(--g2) 38%,var(--g3) 72%,#b8940e 100%);
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
+  filter:drop-shadow(0 0 22px rgba(255,215,0,0.28));
+  margin-bottom:0.55rem;animation:fadeUp 0.8s 0.22s both;
+}
+.subtitle{text-align:center;font-size:0.78rem;font-weight:500;letter-spacing:0.2em;text-transform:uppercase;color:var(--muted);margin-bottom:2rem;animation:fadeUp 0.8s 0.3s both}
+
+/* DIVIDER */
+.divider{display:flex;align-items:center;gap:0.75rem;margin-bottom:2rem;animation:fadeUp 0.8s 0.36s both}
+.div-line{flex:1;height:1px;background:linear-gradient(90deg,transparent,rgba(212,175,55,0.28),transparent)}
+.div-gem{width:7px;height:7px;background:linear-gradient(135deg,var(--g2),var(--g3));transform:rotate(45deg);box-shadow:0 0 10px rgba(212,175,55,0.6);flex-shrink:0;animation:gemPulse 2.5s ease-in-out infinite}
+@keyframes gemPulse{0%,100%{box-shadow:0 0 10px rgba(212,175,55,0.5)}50%{box-shadow:0 0 22px rgba(255,215,0,0.95),0 0 6px rgba(255,215,0,0.6)}}
+
+/* INPUT */
+.field{margin-bottom:1.4rem;animation:fadeUp 0.8s 0.42s both}
+.field-label{display:block;font-size:0.68rem;letter-spacing:0.22em;text-transform:uppercase;color:rgba(212,175,55,0.42);margin-bottom:0.55rem;font-weight:600}
+.input-wrap{position:relative}
+.input-icon{position:absolute;left:1rem;top:50%;transform:translateY(-50%);color:rgba(212,175,55,0.35);pointer-events:none;display:flex;align-items:center;transition:color 0.3s var(--ease)}
+.input-wrap:focus-within .input-icon{color:var(--g3)}
+input[type=text]{
+  width:100%;padding:0.95rem 1.1rem 0.95rem 2.85rem;
+  background:rgba(255,255,255,0.025);
+  border:1px solid rgba(212,175,55,0.18);
+  border-radius:13px;color:var(--g1);
+  font-family:'Cinzel',serif;font-size:1rem;letter-spacing:0.22em;
+  outline:none;-webkit-appearance:none;caret-color:var(--g2);
+  transition:border-color 0.3s var(--ease),box-shadow 0.3s var(--ease),background 0.3s var(--ease);
+}
+input[type=text]::placeholder{color:rgba(212,175,55,0.18);letter-spacing:0.1em;font-family:'Raleway',sans-serif;font-size:0.82rem}
+input[type=text]:focus{border-color:var(--g3);background:rgba(255,215,0,0.03);box-shadow:0 0 0 3px rgba(212,175,55,0.1),0 0 24px rgba(212,175,55,0.12)}
+input[type=text]:disabled{opacity:0.55;cursor:not-allowed}
+
+/* BUTTON */
+.btn{
+  width:100%;padding:1.05rem;border:none;border-radius:13px;
+  background:linear-gradient(135deg,#a87d0a 0%,var(--g3) 30%,var(--g2) 60%,#c8a010 100%);
+  color:#0c0900;font-family:'Cinzel',serif;font-size:0.9rem;font-weight:700;
+  letter-spacing:0.2em;text-transform:uppercase;cursor:pointer;
+  position:relative;overflow:hidden;
+  transition:transform 0.3s var(--ease),box-shadow 0.3s var(--ease),filter 0.3s var(--ease);
+  animation:fadeUp 0.8s 0.5s both;
+  box-shadow:0 1px 0 rgba(255,255,255,0.25) inset,0 4px 22px rgba(212,175,55,0.3);
+}
+.btn-shine{position:absolute;top:0;left:-110%;width:55%;height:100%;background:linear-gradient(100deg,transparent,rgba(255,255,255,0.38),transparent);transform:skewX(-22deg);transition:left 0.65s ease;pointer-events:none}
+.btn:hover:not(:disabled) .btn-shine{left:160%}
+.btn:hover:not(:disabled){transform:translateY(-2px);box-shadow:0 1px 0 rgba(255,255,255,0.28) inset,0 8px 36px rgba(212,175,55,0.5);filter:brightness(1.07)}
+.btn:active:not(:disabled){transform:translateY(0);transition-duration:0.1s}
+.btn:disabled{opacity:0.6;cursor:not-allowed;transform:none!important}
+.btn-inner{display:flex;align-items:center;justify-content:center;gap:0.55rem;pointer-events:none}
+
+/* SPINNER */
+.spinner{display:none;width:17px;height:17px;border:2.5px solid rgba(10,8,0,0.25);border-top-color:rgba(10,8,0,0.85);border-radius:50%;animation:spin 0.65s linear infinite;flex-shrink:0}
+.btn.loading .spinner{display:block}
+@keyframes spin{to{transform:rotate(360deg)}}
+
+/* ALERTS */
+.alerts{margin-top:1.1rem;animation:fadeUp 0.8s 0.55s both;min-height:1px}
+.alert{display:none;align-items:flex-start;gap:0.7rem;padding:0.85rem 1rem;border-radius:10px;font-size:0.83rem;font-weight:500;letter-spacing:0.02em;border:1px solid transparent;line-height:1.5}
+.alert.show{display:flex;animation:alertPop 0.35s cubic-bezier(0.34,1.56,0.64,1) both}
+.alert-err{background:rgba(255,60,60,0.07);border-color:rgba(255,60,60,0.3);color:#ff9090;box-shadow:0 0 18px rgba(255,60,60,0.07)}
+.alert-ok{background:rgba(0,220,100,0.07);border-color:rgba(0,220,100,0.28);color:#60ffaa;box-shadow:0 0 18px rgba(0,220,100,0.07)}
+.alert-ico{flex-shrink:0;margin-top:2px}
+@keyframes alertPop{from{opacity:0;transform:scale(0.94) translateY(8px)}to{opacity:1;transform:scale(1) translateY(0)}}
+
+/* COUNTDOWN */
+.countdown{display:none;flex-direction:column;align-items:center;margin-top:1.2rem;gap:0.3rem}
+.countdown.show{display:flex}
+.cd-label{font-size:0.72rem;letter-spacing:0.18em;text-transform:uppercase;color:rgba(212,175,55,0.38)}
+.cd-num{font-family:'Cinzel',serif;font-size:2.2rem;font-weight:900;background:linear-gradient(135deg,var(--g2),var(--g3));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;filter:drop-shadow(0 0 14px rgba(255,215,0,0.45));line-height:1;animation:cdPulse 1s ease-in-out infinite}
+.cd-bar-wrap{width:100%;max-width:200px;height:2px;background:rgba(212,175,55,0.12);border-radius:99px;overflow:hidden;margin-top:0.3rem}
+.cd-bar{height:100%;background:linear-gradient(90deg,var(--g3),var(--g2));border-radius:99px;width:100%;transition:width 0.95s linear;box-shadow:0 0 6px rgba(255,215,0,0.5)}
+@keyframes cdPulse{0%,100%{transform:scale(1)}50%{transform:scale(1.1)}}
+
+/* WHATSAPP */
+.wa-wrap{margin-top:1.2rem;animation:fadeUp 0.8s 0.58s both}
+.wa-divider{display:flex;align-items:center;gap:0.6rem;margin-bottom:1rem}
+.wa-or{font-size:0.68rem;letter-spacing:0.18em;text-transform:uppercase;color:rgba(212,175,55,0.28);white-space:nowrap;flex-shrink:0}
+.wa-btn{
+  display:flex;align-items:center;justify-content:center;
+  width:100%;padding:0.95rem 1rem;
+  border-radius:13px;border:1px solid rgba(37,211,102,0.3);
+  background:rgba(37,211,102,0.07);
+  color:#5effa0;font-family:'Cinzel',serif;font-size:0.82rem;
+  font-weight:700;letter-spacing:0.15em;text-transform:uppercase;
+  text-decoration:none;position:relative;overflow:hidden;
+  transition:transform 0.3s var(--ease),box-shadow 0.3s var(--ease),background 0.3s var(--ease),border-color 0.3s var(--ease);
+  box-shadow:0 0 18px rgba(37,211,102,0.06);
+}
+.wa-btn:hover{
+  background:rgba(37,211,102,0.13);border-color:rgba(37,211,102,0.55);
+  transform:translateY(-2px);box-shadow:0 6px 28px rgba(37,211,102,0.2);
+}
+.wa-btn:active{transform:translateY(0)}
+.wa-inner{display:flex;align-items:center;gap:0.55rem;position:relative;z-index:1}
+.wa-icon{width:20px;height:20px;flex-shrink:0;animation:waPulse 2.5s ease-in-out infinite}
+.wa-shine{position:absolute;top:0;left:-110%;width:55%;height:100%;background:linear-gradient(100deg,transparent,rgba(255,255,255,0.12),transparent);transform:skewX(-22deg);transition:left 0.65s ease}
+.wa-btn:hover .wa-shine{left:160%}
+@keyframes waPulse{0%,100%{filter:drop-shadow(0 0 3px rgba(37,211,102,0.4))}50%{filter:drop-shadow(0 0 8px rgba(37,211,102,0.8))}}
+
+/* FOOTER */
+footer{position:fixed;bottom:0;left:0;right:0;text-align:center;padding:0.85rem;font-size:0.68rem;letter-spacing:0.12em;color:rgba(212,175,55,0.2);z-index:1;background:linear-gradient(to top,rgba(6,4,1,0.92) 0%,transparent 100%)}
+
+/* KEYFRAMES */
+@keyframes fadeUp{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:translateY(0)}}
+
+/* MOBILE */
+@media(max-width:480px){
+  .card{padding:2.2rem 1.4rem 2rem;border-radius:20px}
+  h1{letter-spacing:0.04em}
+  .btn{font-size:0.82rem;letter-spacing:0.15em}
+}
+@media(max-width:360px){.card{padding:1.8rem 1.1rem 1.8rem}}
+</style>
 </head>
 <body>
-    <div class="container">
-        <h1>تحويل النص إلى فيديو</h1>
-        <textarea id="inputText" placeholder="أدخل النص هنا..."></textarea>
-        <br>
-        <button id="convertButton">تحويل</button>
 
-        <div class="result" id="videoResult" style="display: none;">
-            <h2>الفيديو الناتج:</h2>
-            <iframe id="videoIframe"></iframe>
-        </div>
+<canvas id="cvs"></canvas>
+<div class="orb orb-a"></div>
+<div class="orb orb-b"></div>
+
+<div class="wrap">
+  <div class="card">
+
+    <div class="icon-wrap">
+      <div class="icon-ring">
+        <svg viewBox="0 0 34 34" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <linearGradient id="gg" x1="3" y1="4" x2="31" y2="30" gradientUnits="userSpaceOnUse">
+              <stop offset="0%"   stop-color="#f5e17a"/>
+              <stop offset="45%"  stop-color="#ffd700"/>
+              <stop offset="100%" stop-color="#d4af37"/>
+            </linearGradient>
+          </defs>
+          <path d="M5 24L8 11L14.5 18L17 5L19.5 18L26 11L29 24H5Z" fill="url(#gg)" stroke="url(#gg)" stroke-width="0.4" stroke-linejoin="round"/>
+          <rect x="5" y="25.5" width="24" height="3.5" rx="1.75" fill="url(#gg)"/>
+          <circle cx="5"  cy="24" r="2.2" fill="#ffd700"/>
+          <circle cx="17" cy="5"  r="2.2" fill="#ffd700"/>
+          <circle cx="29" cy="24" r="2.2" fill="#ffd700"/>
+        </svg>
+      </div>
     </div>
 
-    <script>
-        // مفتاح الـ API هنا مباشرة في الـ HTML
-        const apiKey = "667916417c630f47de8fd33592ed5e9d"; // ضع مفتاح الـ API هنا
+    <h1>FTN 65 CODE</h1>
+    <p class="subtitle">Enter your private access code</p>
 
-        // رابط API الذي سيتم إرسال الطلب إليه
-        const apiUrl = "https://api.bytez.ai/model/fal-ai/kling-video/v2.6/pro/text-to-video"; 
+    <div class="divider">
+      <div class="div-line"></div>
+      <div class="div-gem"></div>
+      <div class="div-line"></div>
+    </div>
 
-        // التعامل مع حدث الضغط على زر التحويل
-        document.getElementById('convertButton').addEventListener('click', async () => {
-            const text = document.getElementById('inputText').value;  // جلب النص من المستخدم
-            if (!text) {
-                alert('يرجى إدخال نص.');
-                return;
-            }
+    <div class="field">
+      <label class="field-label" for="code">Access Code</label>
+      <div class="input-wrap">
+        <span class="input-icon">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="3" y="11" width="18" height="11" rx="2"/>
+            <path d="M7 11V7a5 5 0 0 1 10 0v4"/>
+          </svg>
+        </span>
+        <input id="code" type="text" placeholder="Enter your secret code"
+          autocomplete="off" autocorrect="off" autocapitalize="off"
+          spellcheck="false" maxlength="80"/>
+      </div>
+    </div>
 
-            try {
-                // إرسال الطلب إلى API
-                const response = await fetch(apiUrl, {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'Authorization': `Bearer ${apiKey}` // إرسال المفتاح في الترويسة
-                    },
-                    body: JSON.stringify({ text })  // إرسال النص إلى API
-                });
+    <button class="btn" id="btn" type="button">
+      <div class="btn-inner">
+        <div class="spinner"></div>
+        <span class="btn-text">Verify Code</span>
+      </div>
+      <div class="btn-shine"></div>
+    </button>
 
-                const result = await response.json(); // استخراج النتيجة
+    <div class="wa-wrap">
+      <div class="wa-divider">
+        <div class="div-line"></div>
+        <span class="wa-or">u0623u0648</span>
+        <div class="div-line"></div>
+      </div>
+      <a class="wa-btn"
+         href="https://wa.me/212769356031?text=%F0%9F%91%8B%20%D8%A7%D9%84%D8%B3%D9%84%D8%A7%D9%85%20%D8%B9%D9%84%D9%8A%D9%83%D9%85%20%2C%20%D8%A8%D8%BA%D9%8A%D8%AA%20%D9%86%D8%AD%D8%B5%D9%84%20%D8%B9%D9%84%D9%89%20%D9%83%D9%88%D8%AF%20VIP%20%D8%AF%D9%8A%D8%A7%D9%84%20FTN%2065%20CODE"
+         target="_blank" rel="noopener noreferrer">
+        <div class="wa-inner">
+          <svg class="wa-icon" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+            <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+          </svg>
+          <span>SEND MESSAGE OF DEV</span>
+        </div>
+        <div class="wa-shine"></div>
+      </a>
+    </div>
 
-                if (result.error) {
-                    alert('حدث خطأ: ' + result.error);
-                } else {
-                    const videoUrl = result.output;  // الحصول على رابط الفيديو من النتيجة
-                    document.getElementById('videoResult').style.display = 'block';  // إظهار الفيديو
-                    document.getElementById('videoIframe').src = videoUrl;  // وضع رابط الفيديو في الـ iframe
-                }
-            } catch (error) {
-                alert('حدث خطأ أثناء الاتصال بـ API');
-            }
-        });
-    </script>
+    <div class="alerts">
+      <div class="alert alert-err" id="a-err" role="alert" aria-live="assertive">
+        <span class="alert-ico">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="10"/>
+            <line x1="12" y1="8" x2="12" y2="12"/>
+            <line x1="12" y1="16" x2="12.01" y2="16"/>
+          </svg>
+        </span>
+        <span id="err-msg">Invalid code. Please try again.</span>
+      </div>
+      <div class="alert alert-ok" id="a-ok" role="alert" aria-live="polite">
+        <span class="alert-ico">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="20 6 9 17 4 12"/>
+          </svg>
+        </span>
+        <span>Access granted! Preparing your redirect…</span>
+      </div>
+    </div>
+
+    <div class="countdown" id="cd" aria-live="polite">
+      <span class="cd-label">Redirecting in</span>
+      <span class="cd-num" id="cd-n">10</span>
+      <div class="cd-bar-wrap"><div class="cd-bar" id="cd-bar"></div></div>
+    </div>
+
+  </div>
+</div>
+
+<footer>© 2026 FTN 65 CODE — All Rights Reserved</footer>
+
+<script>
+/* ════════════════════════════════════════
+   ✅  ADD YOUR CODES HERE
+   Format:  "CODE": "https://redirect-url.com"
+════════════════════════════════════════ */
+var CODES = {
+  "WORMGPT-S22-2026": "https://muhgpt.com/"
+};
+/* ════════════════════════════════════════ */
+
+/* PARTICLES */
+(function(){
+  var c=document.getElementById('cvs'),x=c.getContext('2d'),W,H,pts=[],TAU=Math.PI*2;
+  function sz(){W=c.width=window.innerWidth;H=c.height=window.innerHeight}
+  window.addEventListener('resize',sz);sz();
+  function rnd(a,b){return a+Math.random()*(b-a)}
+  function mk(){return{x:rnd(0,W),y:rnd(0,H),r:rnd(0.4,2),vx:rnd(-0.12,0.12),vy:rnd(-0.32,-0.08),base:rnd(0.04,0.38),ph:rnd(0,TAU),spd:rnd(0.012,0.028)}}
+  for(var i=0;i<100;i++)pts.push(mk());
+  (function fr(){
+    x.clearRect(0,0,W,H);
+    pts.forEach(function(p,i){
+      p.x+=p.vx;p.y+=p.vy;p.ph+=p.spd;
+      var a=Math.max(0,Math.min(0.7,p.base+Math.sin(p.ph)*0.14));
+      x.beginPath();x.arc(p.x,p.y,p.r,0,TAU);
+      x.fillStyle='rgba(212,175,55,'+a+')';x.fill();
+      if(p.y<-5||p.x<-5||p.x>W+5){pts[i]=mk();pts[i].y=H+5;pts[i].x=rnd(0,W)}
+    });
+    requestAnimationFrame(fr);
+  })();
+})();
+
+/* VERIFY LOGIC */
+(function(){
+  var btn=document.getElementById('btn');
+  var inp=document.getElementById('code');
+  var aErr=document.getElementById('a-err');
+  var aOk=document.getElementById('a-ok');
+  var errMsg=document.getElementById('err-msg');
+  var cdWrap=document.getElementById('cd');
+  var cdNum=document.getElementById('cd-n');
+  var cdBar=document.getElementById('cd-bar');
+  var busy=false,done=false,lastErr=0,COOL=1500;
+
+  function clearAlerts(){aErr.classList.remove('show');aOk.classList.remove('show')}
+  function showErr(m){clearAlerts();errMsg.textContent=m||'Invalid code. Please try again.';aErr.classList.add('show')}
+  function showOk(){clearAlerts();aOk.classList.add('show')}
+
+  function lock(on){
+    busy=on;btn.disabled=on||done;inp.disabled=on||done;
+    btn.classList.toggle('loading',on);
+    btn.querySelector('.btn-text').textContent=on?'Verifying…':'Verify Code';
+  }
+
+  function startCountdown(url){
+    var total=10,left=10;
+    showOk();cdWrap.classList.add('show');
+    cdNum.textContent=left;cdBar.style.width='100%';
+    var iv=setInterval(function(){
+      left--;
+      cdNum.textContent=left;
+      cdBar.style.width=((left/total)*100)+'%';
+      if(left<=0){clearInterval(iv);window.location.href=url}
+    },1000);
+  }
+
+  function verify(){
+    if(busy||done)return;
+    var code=inp.value.trim();
+    if(!code){showErr('Please enter your access code.');inp.focus();return}
+    if(Date.now()-lastErr<COOL){showErr('Please wait a moment before retrying.');return}
+
+    clearAlerts();lock(true);
+
+    /* small fake delay so it feels like it's checking */
+    setTimeout(function(){
+      var url=CODES[code];
+      if(url){
+        done=true;inp.value='';lock(false);
+        startCountdown(url);
+      } else {
+        lastErr=Date.now();
+        showErr('Invalid code. Please try again.');
+        lock(false);inp.select();inp.focus();
+      }
+    },700);
+  }
+
+  btn.addEventListener('click',verify);
+  inp.addEventListener('keydown',function(e){if(e.key==='Enter')verify()});
+  inp.focus();
+})();
+</script>
 </body>
 </html>
