@@ -33,7 +33,6 @@
       overflow-x: hidden;
     }
 
-    /* NOISE OVERLAY */
     body::before {
       content: '';
       position: fixed;
@@ -44,7 +43,7 @@
       opacity: 0.4;
     }
 
-    /* HEADER */
+    /* ── HEADER ── */
     header {
       position: sticky; top: 0; z-index: 100;
       background: rgba(10,10,10,0.92);
@@ -54,7 +53,7 @@
     }
 
     .header-inner {
-      max-width: 900px;
+      max-width: 960px;
       margin: 0 auto;
       display: flex;
       align-items: center;
@@ -74,7 +73,6 @@
       background-clip: text;
       flex-shrink: 0;
     }
-
     .logo span {
       background: linear-gradient(135deg, #fff, #bbb);
       -webkit-background-clip: text;
@@ -82,23 +80,18 @@
       background-clip: text;
     }
 
-    /* SEARCH BAR */
     .search-wrap {
-      flex: 1;
-      max-width: 380px;
+      flex: 1; max-width: 400px;
       position: relative;
     }
-
     .search-wrap i {
       position: absolute;
-      right: 14px;
-      top: 50%;
+      right: 14px; top: 50%;
       transform: translateY(-50%);
       color: var(--gray);
       font-size: 14px;
       pointer-events: none;
     }
-
     .search-input {
       width: 100%;
       padding: 10px 40px 10px 16px;
@@ -109,126 +102,107 @@
       font-family: var(--font-body);
       font-size: 14px;
       outline: none;
-      transition: border-color 0.3s, box-shadow 0.3s;
+      transition: border-color .3s, box-shadow .3s;
     }
-
     .search-input::placeholder { color: var(--gray); }
     .search-input:focus {
       border-color: var(--red);
-      box-shadow: 0 0 0 3px rgba(220,0,0,0.12);
+      box-shadow: 0 0 0 3px rgba(220,0,0,.12);
     }
 
-    /* MAIN */
+    /* ── MAIN ── */
     main {
-      max-width: 900px;
+      max-width: 960px;
       margin: 0 auto;
       padding: 28px 16px 80px;
     }
 
-    /* HERO BANNER */
+    /* ── HERO ── */
     .hero {
       position: relative;
-      border-radius: 16px;
+      border-radius: 18px;
       overflow: hidden;
       margin-bottom: 36px;
-      height: 160px;
+      height: 165px;
       display: flex;
       align-items: center;
-      padding: 24px;
+      padding: 28px;
       background: linear-gradient(135deg, #150000, #2a0000, #0a0a0a);
       border: 1px solid rgba(220,0,0,0.3);
     }
-
     .hero::before {
       content: '';
-      position: absolute;
-      inset: 0;
+      position: absolute; inset: 0;
       background:
-        radial-gradient(ellipse at 20% 50%, rgba(220,0,0,0.2) 0%, transparent 60%),
-        radial-gradient(ellipse at 80% 50%, rgba(139,0,0,0.15) 0%, transparent 60%);
+        radial-gradient(ellipse at 15% 50%, rgba(220,0,0,.22) 0%, transparent 60%),
+        radial-gradient(ellipse at 85% 50%, rgba(139,0,0,.15) 0%, transparent 60%);
     }
-
     .hero-grid {
-      position: absolute;
-      inset: 0;
+      position: absolute; inset: 0;
       background-image:
-        linear-gradient(rgba(220,0,0,0.06) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(220,0,0,0.06) 1px, transparent 1px);
-      background-size: 30px 30px;
+        linear-gradient(rgba(220,0,0,.07) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(220,0,0,.07) 1px, transparent 1px);
+      background-size: 32px 32px;
     }
-
-    .hero-content {
-      position: relative;
-      z-index: 1;
-    }
-
+    .hero-content { position: relative; z-index: 1; }
     .hero-title {
       font-family: var(--font-display);
-      font-size: clamp(28px, 5vw, 44px);
-      letter-spacing: 3px;
+      font-size: clamp(30px, 5vw, 48px);
+      letter-spacing: 4px;
       line-height: 1;
       color: var(--white);
     }
-
-    .hero-title em {
-      color: var(--red-bright);
-      font-style: normal;
-    }
-
+    .hero-title em { color: var(--red-bright); font-style: normal; }
     .hero-sub {
-      margin-top: 6px;
-      font-size: 13px;
+      margin-top: 8px;
+      font-size: 14px;
       color: var(--gray-light);
       font-weight: 300;
     }
 
-    /* SECTION TITLE */
+    /* ── SECTION HEADER ── */
     .section-header {
       display: flex;
       align-items: center;
       gap: 10px;
       margin-bottom: 18px;
     }
-
     .section-title {
       font-family: var(--font-display);
       font-size: 22px;
       letter-spacing: 2px;
       color: var(--white);
+      white-space: nowrap;
     }
-
     .section-line {
-      flex: 1;
-      height: 1px;
-      background: linear-gradient(to left, transparent, rgba(220,0,0,0.5));
+      flex: 1; height: 1px;
+      background: linear-gradient(to left, transparent, rgba(220,0,0,.5));
     }
-
     .section-badge {
       font-size: 11px;
       background: var(--red-dark);
       color: var(--red-bright);
-      border: 1px solid rgba(220,0,0,0.4);
-      padding: 2px 8px;
+      border: 1px solid rgba(220,0,0,.4);
+      padding: 2px 10px;
       border-radius: 50px;
       font-weight: 700;
       letter-spacing: 1px;
     }
 
-    /* CATEGORIES */
+    /* ── CATEGORIES ── */
     .categories {
       display: flex;
       gap: 8px;
       overflow-x: auto;
       padding-bottom: 8px;
-      margin-bottom: 24px;
+      margin-bottom: 26px;
       scrollbar-width: none;
     }
     .categories::-webkit-scrollbar { display: none; }
-
     .cat-btn {
-      padding: 7px 18px;
+      padding: 7px 20px;
       border-radius: 50px;
-      border: 1px solid rgba(220,0,0,0.3);
+      border: 1px solid rgba(220,0,0,.3);
       background: var(--black-3);
       color: var(--gray-light);
       font-family: var(--font-body);
@@ -236,37 +210,35 @@
       font-weight: 600;
       cursor: pointer;
       white-space: nowrap;
-      transition: all 0.25s;
+      transition: all .25s;
     }
-
     .cat-btn:hover, .cat-btn.active {
       background: var(--red);
       border-color: var(--red);
       color: #fff;
     }
 
-    /* APPS GRID */
+    /* ── APPS GRID ── */
     .apps-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+      grid-template-columns: repeat(auto-fill, minmax(270px, 1fr));
       gap: 16px;
     }
 
-    /* APP CARD */
+    /* ── APP CARD ── */
     .app-card {
       background: var(--black-3);
-      border: 1px solid rgba(255,255,255,0.06);
-      border-radius: 14px;
+      border: 1px solid rgba(255,255,255,.06);
+      border-radius: 16px;
       overflow: hidden;
       cursor: pointer;
-      transition: transform 0.3s, border-color 0.3s, box-shadow 0.3s;
-      animation: fadeUp 0.5s ease both;
+      transition: transform .3s, border-color .3s, box-shadow .3s;
+      animation: fadeUp .5s ease both;
     }
-
     .app-card:hover {
-      transform: translateY(-4px);
-      border-color: rgba(220,0,0,0.5);
-      box-shadow: 0 16px 40px rgba(220,0,0,0.12), 0 4px 12px rgba(0,0,0,0.5);
+      transform: translateY(-5px);
+      border-color: rgba(220,0,0,.55);
+      box-shadow: 0 18px 44px rgba(220,0,0,.13), 0 4px 14px rgba(0,0,0,.5);
     }
 
     .card-top {
@@ -275,20 +247,17 @@
       align-items: center;
       gap: 14px;
     }
-
     .app-icon-wrap {
-      width: 56px; height: 56px;
-      border-radius: 14px;
+      width: 58px; height: 58px;
+      border-radius: 15px;
       display: flex;
       align-items: center;
       justify-content: center;
       flex-shrink: 0;
       font-size: 22px;
-      border: 1px solid rgba(255,255,255,0.08);
+      border: 1px solid rgba(255,255,255,.08);
     }
-
     .card-meta { flex: 1; min-width: 0; }
-
     .app-name {
       font-size: 16px;
       font-weight: 700;
@@ -296,14 +265,12 @@
       overflow: hidden;
       text-overflow: ellipsis;
     }
-
     .app-category {
       font-size: 12px;
       color: var(--red-bright);
       font-weight: 600;
       margin-top: 2px;
     }
-
     .app-rating {
       display: flex;
       align-items: center;
@@ -312,25 +279,22 @@
       font-size: 12px;
       color: var(--gray);
     }
-
     .app-rating i { color: #f5a623; font-size: 10px; }
 
     .card-desc {
       padding: 0 18px 14px;
       font-size: 13px;
       color: var(--gray);
-      line-height: 1.5;
+      line-height: 1.55;
       font-weight: 300;
     }
-
     .card-footer {
       padding: 12px 18px;
-      border-top: 1px solid rgba(255,255,255,0.05);
+      border-top: 1px solid rgba(255,255,255,.05);
       display: flex;
       align-items: center;
       justify-content: space-between;
     }
-
     .app-downloads {
       font-size: 11px;
       color: var(--gray);
@@ -338,7 +302,6 @@
       align-items: center;
       gap: 5px;
     }
-
     .open-btn {
       padding: 7px 20px;
       background: linear-gradient(135deg, var(--red), var(--red-dark));
@@ -349,19 +312,31 @@
       font-size: 13px;
       font-weight: 700;
       cursor: pointer;
-      transition: opacity 0.2s, transform 0.2s;
-      letter-spacing: 0.5px;
+      transition: opacity .2s, transform .2s;
+      letter-spacing: .5px;
+    }
+    .open-btn:hover { opacity: .85; transform: scale(1.04); }
+
+    /* ── NO RESULTS ── */
+    .no-results {
+      display: none;
+      text-align: center;
+      padding: 60px 20px;
+      color: var(--gray);
+    }
+    .no-results i {
+      font-size: 42px;
+      margin-bottom: 14px;
+      color: rgba(220,0,0,.3);
+      display: block;
     }
 
-    .open-btn:hover { opacity: 0.85; transform: scale(1.04); }
-
-    /* -------- MODAL OVERLAY -------- */
+    /* ── MODAL ── */
     .overlay {
       display: none;
-      position: fixed;
-      inset: 0;
-      background: rgba(0,0,0,0.85);
-      backdrop-filter: blur(8px);
+      position: fixed; inset: 0;
+      background: rgba(0,0,0,.87);
+      backdrop-filter: blur(10px);
       z-index: 1000;
       align-items: center;
       justify-content: center;
@@ -371,97 +346,82 @@
 
     .modal {
       background: var(--black-3);
-      border: 1px solid rgba(220,0,0,0.4);
-      border-radius: 20px;
+      border: 1px solid rgba(220,0,0,.45);
+      border-radius: 22px;
       width: 100%;
       max-width: 360px;
       overflow: hidden;
-      animation: scaleIn 0.3s cubic-bezier(0.34,1.56,0.64,1) both;
+      animation: scaleIn .32s cubic-bezier(.34,1.56,.64,1) both;
     }
 
     .modal-top {
       background: linear-gradient(135deg, #1a0000, #0f0f0f);
-      padding: 28px 24px 20px;
+      padding: 28px 24px 22px;
       text-align: center;
-      position: relative;
-      border-bottom: 1px solid rgba(220,0,0,0.2);
+      border-bottom: 1px solid rgba(220,0,0,.2);
     }
-
     .modal-icon {
-      width: 72px; height: 72px;
-      border-radius: 18px;
+      width: 74px; height: 74px;
+      border-radius: 20px;
       display: flex;
       align-items: center;
       justify-content: center;
       margin: 0 auto 14px;
       font-size: 28px;
-      border: 2px solid rgba(255,255,255,0.1);
+      border: 2px solid rgba(255,255,255,.1);
     }
-
     .modal-name {
       font-family: var(--font-display);
-      font-size: 28px;
+      font-size: 30px;
       letter-spacing: 2px;
     }
-
     .modal-url {
       font-size: 12px;
       color: var(--red-bright);
       margin-top: 4px;
-      opacity: 0.8;
+      opacity: .8;
     }
 
     .modal-body { padding: 24px; text-align: center; }
 
-    .countdown-wrap {
-      margin-bottom: 20px;
-    }
-
     .countdown-label {
       font-size: 13px;
       color: var(--gray);
-      margin-bottom: 12px;
+      margin-bottom: 14px;
     }
-
     .countdown-ring {
       position: relative;
-      width: 90px; height: 90px;
-      margin: 0 auto;
+      width: 92px; height: 92px;
+      margin: 0 auto 20px;
     }
-
     .countdown-ring svg {
       transform: rotate(-90deg);
-      width: 90px; height: 90px;
+      width: 92px; height: 92px;
     }
-
     .countdown-ring circle {
       fill: none;
       stroke-width: 4;
       stroke-linecap: round;
     }
-
-    .ring-bg { stroke: rgba(255,255,255,0.08); }
+    .ring-bg { stroke: rgba(255,255,255,.08); }
     .ring-fg {
       stroke: var(--red-bright);
-      stroke-dasharray: 251.2;
+      stroke-dasharray: 263.9;
       stroke-dashoffset: 0;
       transition: stroke-dashoffset 1s linear;
-      filter: drop-shadow(0 0 6px var(--red));
+      filter: drop-shadow(0 0 7px var(--red));
     }
-
     .countdown-number {
-      position: absolute;
-      inset: 0;
+      position: absolute; inset: 0;
       display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: center;
       font-family: var(--font-display);
-      font-size: 32px;
+      font-size: 34px;
       color: var(--white);
       line-height: 1;
     }
-
     .countdown-number span {
       font-size: 11px;
       color: var(--gray);
@@ -472,10 +432,10 @@
 
     .progress-bar {
       height: 3px;
-      background: rgba(255,255,255,0.06);
+      background: rgba(255,255,255,.06);
       border-radius: 50px;
       overflow: hidden;
-      margin-bottom: 20px;
+      margin-bottom: 22px;
     }
     .progress-fill {
       height: 100%;
@@ -485,89 +445,78 @@
       width: 100%;
     }
 
-    .modal-actions {
-      display: flex;
-      gap: 10px;
-    }
+    .modal-actions { display: flex; gap: 10px; }
 
     .btn-cancel {
       flex: 1;
-      padding: 12px;
+      padding: 13px;
       background: var(--black-4);
-      border: 1px solid rgba(255,255,255,0.1);
-      border-radius: 12px;
+      border: 1px solid rgba(255,255,255,.1);
+      border-radius: 14px;
       color: var(--gray-light);
       font-family: var(--font-body);
       font-size: 14px;
       font-weight: 600;
       cursor: pointer;
-      transition: all 0.2s;
+      transition: all .2s;
     }
-    .btn-cancel:hover { background: var(--black); color: var(--white); }
+    .btn-cancel:hover { background: var(--black-2); color: var(--white); }
 
     .btn-go {
       flex: 1;
-      padding: 12px;
+      padding: 13px;
       background: linear-gradient(135deg, var(--red), var(--red-dark));
       border: none;
-      border-radius: 12px;
+      border-radius: 14px;
       color: #fff;
       font-family: var(--font-body);
       font-size: 14px;
       font-weight: 700;
       cursor: pointer;
-      transition: opacity 0.2s;
+      transition: opacity .2s;
       display: flex;
       align-items: center;
       justify-content: center;
-      gap: 6px;
+      gap: 7px;
     }
-    .btn-go:hover { opacity: 0.85; }
-    .btn-go:disabled { opacity: 0.4; cursor: not-allowed; }
+    .btn-go:hover { opacity: .85; }
+    .btn-go:disabled { opacity: .4; cursor: not-allowed; }
 
-    /* NO RESULTS */
-    .no-results {
-      text-align: center;
-      padding: 60px 20px;
-      color: var(--gray);
-      display: none;
-    }
-    .no-results i { font-size: 40px; margin-bottom: 14px; color: rgba(220,0,0,0.3); display: block; }
-
-    /* FOOTER */
+    /* ── FOOTER ── */
     footer {
       text-align: center;
-      padding: 24px;
+      padding: 26px;
       font-size: 12px;
-      color: rgba(255,255,255,0.15);
-      border-top: 1px solid rgba(255,255,255,0.04);
+      color: rgba(255,255,255,.14);
+      border-top: 1px solid rgba(255,255,255,.04);
       font-family: var(--font-display);
       letter-spacing: 2px;
     }
     footer span { color: var(--red); }
 
-    /* ANIMATIONS */
+    /* ── ANIMATIONS ── */
     @keyframes fadeUp {
-      from { opacity: 0; transform: translateY(20px); }
-      to { opacity: 1; transform: translateY(0); }
+      from { opacity: 0; transform: translateY(22px); }
+      to   { opacity: 1; transform: translateY(0); }
     }
-
     @keyframes scaleIn {
-      from { opacity: 0; transform: scale(0.85); }
-      to { opacity: 1; transform: scale(1); }
+      from { opacity: 0; transform: scale(.84); }
+      to   { opacity: 1; transform: scale(1); }
     }
 
-    .app-card:nth-child(1) { animation-delay: 0.05s; }
-    .app-card:nth-child(2) { animation-delay: 0.1s; }
-    .app-card:nth-child(3) { animation-delay: 0.15s; }
-    .app-card:nth-child(4) { animation-delay: 0.2s; }
+    .app-card:nth-child(1) { animation-delay: .05s; }
+    .app-card:nth-child(2) { animation-delay: .10s; }
+    .app-card:nth-child(3) { animation-delay: .15s; }
+    .app-card:nth-child(4) { animation-delay: .20s; }
+    .app-card:nth-child(5) { animation-delay: .25s; }
+    .app-card:nth-child(6) { animation-delay: .30s; }
 
-    /* SCROLLBAR */
+    /* ── SCROLLBAR ── */
     ::-webkit-scrollbar { width: 4px; }
     ::-webkit-scrollbar-track { background: var(--black); }
     ::-webkit-scrollbar-thumb { background: var(--red-dark); border-radius: 4px; }
 
-    /* RESPONSIVE */
+    /* ── RESPONSIVE ── */
     @media (max-width: 600px) {
       .logo { font-size: 20px; }
       .apps-grid { grid-template-columns: 1fr; }
@@ -577,21 +526,20 @@
 </head>
 <body>
 
-  <!-- HEADER -->
+  <!-- ─── HEADER ─── -->
   <header>
     <div class="header-inner">
       <div class="logo">SABER X<span> TOOLS</span></div>
       <div class="search-wrap">
         <i class="fa-solid fa-magnifying-glass"></i>
-        <input type="text" class="search-input" placeholder="ابحث عن تطبيق أو موقع..." id="searchInput" />
+        <input type="text" class="search-input" id="searchInput" placeholder="ابحث عن تطبيق أو موقع..." />
       </div>
     </div>
   </header>
 
-  <!-- MAIN -->
+  <!-- ─── MAIN ─── -->
   <main>
 
-    <!-- HERO -->
     <div class="hero">
       <div class="hero-grid"></div>
       <div class="hero-content">
@@ -600,10 +548,8 @@
       </div>
     </div>
 
-    <!-- CATEGORIES -->
     <div class="categories" id="categoriesBar"></div>
 
-    <!-- APPS SECTION -->
     <div class="section-header">
       <div class="section-title">التطبيقات والمواقع</div>
       <div class="section-line"></div>
@@ -618,29 +564,27 @@
 
   </main>
 
-  <!-- FOOTER -->
+  <!-- ─── FOOTER ─── -->
   <footer>SABER X <span>TOOLS</span> &mdash; 2025</footer>
 
-  <!-- REDIRECT MODAL -->
+  <!-- ─── MODAL ─── -->
   <div class="overlay" id="overlay">
     <div class="modal">
       <div class="modal-top">
         <div class="modal-icon" id="modalIcon"></div>
         <div class="modal-name" id="modalName"></div>
-        <div class="modal-url" id="modalUrl"></div>
+        <div class="modal-url"  id="modalUrl"></div>
       </div>
       <div class="modal-body">
-        <div class="countdown-wrap">
-          <div class="countdown-label">سيتم التحويل خلال</div>
-          <div class="countdown-ring">
-            <svg viewBox="0 0 90 90">
-              <circle class="ring-bg" cx="45" cy="45" r="40"/>
-              <circle class="ring-fg" id="ringFg" cx="45" cy="45" r="40"/>
-            </svg>
-            <div class="countdown-number">
-              <div id="countdownNum">10</div>
-              <span>ثانية</span>
-            </div>
+        <div class="countdown-label">سيتم التحويل خلال</div>
+        <div class="countdown-ring">
+          <svg viewBox="0 0 92 92">
+            <circle class="ring-bg" cx="46" cy="46" r="42"/>
+            <circle class="ring-fg" id="ringFg" cx="46" cy="46" r="42"/>
+          </svg>
+          <div class="countdown-number">
+            <div id="countdownNum">10</div>
+            <span>ثانية</span>
           </div>
         </div>
         <div class="progress-bar">
@@ -658,26 +602,64 @@
     </div>
   </div>
 
-  <!-- DATA -->
-  <script src="api/lien.js"></script>
-
   <script>
-    // Icon map
-    const ICONS = {
-      video:       { icon: 'fa-solid fa-play',          bg: 'linear-gradient(135deg,#cc0000,#660000)' },
-      code:        { icon: 'fa-solid fa-code',           bg: 'linear-gradient(135deg,#1a1a2e,#16213e)' },
-      social:      { icon: 'fa-solid fa-users',          bg: 'linear-gradient(135deg,#1877f2,#0e4f9e)' },
-      tool:        { icon: 'fa-solid fa-wrench',         bg: 'linear-gradient(135deg,#b00,#500)' },
-      news:        { icon: 'fa-solid fa-newspaper',      bg: 'linear-gradient(135deg,#333,#111)' },
-      music:       { icon: 'fa-solid fa-music',          bg: 'linear-gradient(135deg,#1db954,#0d7a36)' },
-      default:     { icon: 'fa-solid fa-globe',          bg: 'linear-gradient(135deg,#700,#300)' },
+    /* ══════════════════════════════════════════════
+       DATA  —  أضف مواقعك هنا بنفس الصيغة
+    ══════════════════════════════════════════════ */
+    const APPS_DATA = {
+      apps: [
+        {
+          id: 1,
+          name: "YouTube",
+          category: "Video",
+          description: "منصة مشاركة الفيديو الأكبر في العالم",
+          url: "https://www.youtube.com",
+          icon: "video",
+          rating: 4.8,
+          downloads: "10B+"
+        },
+        {
+          id: 2,
+          name: "GitHub",
+          category: "Development",
+          description: "منصة استضافة الكود المصدري والتعاون البرمجي",
+          url: "https://www.github.com",
+          icon: "code",
+          rating: 4.9,
+          downloads: "500M+"
+        }
+        /* أضف المزيد هنا على نفس النمط:
+        ,{
+          id: 3,
+          name: "اسم الموقع",
+          category: "Tools",
+          description: "وصف قصير",
+          url: "https://example.com",
+          icon: "tool",
+          rating: 4.5,
+          downloads: "100M+"
+        }
+        */
+      ],
+      categories: ["الكل", "Video", "Development", "Social", "Tools", "News"]
     };
 
-    function getIcon(type) {
-      return ICONS[type] || ICONS.default;
-    }
+    /* ══════════════════════════════════════════════
+       ICON MAP
+    ══════════════════════════════════════════════ */
+    const ICONS = {
+      video:   { fa: 'fa-solid fa-play',      bg: 'linear-gradient(135deg,#cc0000,#660000)' },
+      code:    { fa: 'fa-solid fa-code',       bg: 'linear-gradient(135deg,#1a1a2e,#16213e)' },
+      social:  { fa: 'fa-solid fa-users',      bg: 'linear-gradient(135deg,#1877f2,#0e4f9e)' },
+      tool:    { fa: 'fa-solid fa-wrench',     bg: 'linear-gradient(135deg,#b00,#500)' },
+      news:    { fa: 'fa-solid fa-newspaper',  bg: 'linear-gradient(135deg,#333,#111)' },
+      music:   { fa: 'fa-solid fa-music',      bg: 'linear-gradient(135deg,#1db954,#0d7a36)' },
+      default: { fa: 'fa-solid fa-globe',      bg: 'linear-gradient(135deg,#700,#300)' },
+    };
 
-    // Build category pills
+    const getIcon = k => ICONS[k] || ICONS.default;
+
+    /* ── Build categories ── */
     function buildCategories() {
       const bar = document.getElementById('categoriesBar');
       bar.innerHTML = '';
@@ -695,38 +677,35 @@
       });
     }
 
-    // Render apps
+    /* ── Render apps ── */
     function renderApps(query = '', category = 'الكل') {
-      const grid = document.getElementById('appsGrid');
-      const noRes = document.getElementById('noResults');
+      const grid   = document.getElementById('appsGrid');
+      const noRes  = document.getElementById('noResults');
       const countEl = document.getElementById('appCount');
       grid.innerHTML = '';
 
       const q = query.trim().toLowerCase();
       const filtered = APPS_DATA.apps.filter(app => {
         const matchCat = category === 'الكل' || app.category === category;
-        const matchQ = !q || app.name.toLowerCase().includes(q) || app.description.includes(q) || app.category.toLowerCase().includes(q);
+        const matchQ   = !q || app.name.toLowerCase().includes(q)
+                            || app.description.includes(q)
+                            || app.category.toLowerCase().includes(q);
         return matchCat && matchQ;
       });
 
       countEl.textContent = filtered.length;
 
-      if (filtered.length === 0) {
-        noRes.style.display = 'block';
-        return;
-      }
+      if (!filtered.length) { noRes.style.display = 'block'; return; }
       noRes.style.display = 'none';
 
       filtered.forEach(app => {
-        const { icon, bg } = getIcon(app.icon);
-        const stars = '★'.repeat(Math.floor(app.rating)) + (app.rating % 1 >= 0.5 ? '½' : '');
-
+        const { fa, bg } = getIcon(app.icon);
         const card = document.createElement('div');
         card.className = 'app-card';
         card.innerHTML = `
           <div class="card-top">
             <div class="app-icon-wrap" style="background:${bg}">
-              <i class="${icon}" style="color:#fff"></i>
+              <i class="${fa}" style="color:#fff"></i>
             </div>
             <div class="card-meta">
               <div class="app-name">${app.name}</div>
@@ -747,41 +726,39 @@
               <i class="fa-solid fa-arrow-up-right-from-square" style="margin-left:5px;font-size:11px"></i>
               فتح
             </button>
-          </div>
-        `;
+          </div>`;
 
-        card.querySelector('.open-btn').addEventListener('click', (e) => {
-          e.stopPropagation();
-          openModal(app);
-        });
-        card.addEventListener('click', () => openModal(app));
-
+        const launch = () => openModal(app);
+        card.querySelector('.open-btn').addEventListener('click', e => { e.stopPropagation(); launch(); });
+        card.addEventListener('click', launch);
         grid.appendChild(card);
       });
     }
 
-    // SEARCH
+    /* ── Search ── */
     document.getElementById('searchInput').addEventListener('input', e => {
       const activeCat = document.querySelector('.cat-btn.active')?.dataset.cat || 'الكل';
       renderApps(e.target.value, activeCat);
     });
 
-    // ---- MODAL / COUNTDOWN ----
-    let countdownTimer = null;
+    /* ══════════════════════════════════════════════
+       MODAL + COUNTDOWN
+    ══════════════════════════════════════════════ */
+    let timer = null;
     let currentUrl = '';
+    const CIRCUMFERENCE = 2 * Math.PI * 42; // ≈ 263.9
 
     function openModal(app) {
-      clearInterval(countdownTimer);
+      clearInterval(timer);
       currentUrl = app.url;
-      const { icon, bg } = getIcon(app.icon);
 
+      const { fa, bg } = getIcon(app.icon);
       const modalIcon = document.getElementById('modalIcon');
       modalIcon.style.background = bg;
-      modalIcon.innerHTML = `<i class="${icon}" style="color:#fff;font-size:28px"></i>`;
+      modalIcon.innerHTML = `<i class="${fa}" style="color:#fff;font-size:28px"></i>`;
       document.getElementById('modalName').textContent = app.name;
-
-      const urlDisplay = app.url.replace('https://www.', '').replace('https://', '').replace(/\/$/, '');
-      document.getElementById('modalUrl').textContent = urlDisplay;
+      document.getElementById('modalUrl').textContent  =
+        app.url.replace(/https?:\/\/(www\.)?/, '').replace(/\/$/, '');
 
       document.getElementById('overlay').classList.add('show');
       startCountdown(10);
@@ -789,22 +766,20 @@
 
     function startCountdown(total) {
       let remaining = total;
-      const numEl = document.getElementById('countdownNum');
-      const ring = document.getElementById('ringFg');
+      const numEl    = document.getElementById('countdownNum');
+      const ring     = document.getElementById('ringFg');
       const progress = document.getElementById('progressFill');
-      const btnGo = document.getElementById('btnGo');
 
-      const circumference = 2 * Math.PI * 40; // 251.2
-      ring.style.strokeDasharray = circumference;
+      ring.style.strokeDasharray  = CIRCUMFERENCE;
+      ring.style.strokeDashoffset = 0;
 
-      function update() {
+      function tick() {
         numEl.textContent = remaining;
         const pct = remaining / total;
-        ring.style.strokeDashoffset = circumference * (1 - pct);
+        ring.style.strokeDashoffset = CIRCUMFERENCE * (1 - pct);
         progress.style.width = (pct * 100) + '%';
-
         if (remaining <= 0) {
-          clearInterval(countdownTimer);
+          clearInterval(timer);
           window.open(currentUrl, '_blank');
           closeModal();
           return;
@@ -812,28 +787,26 @@
         remaining--;
       }
 
-      update();
-      countdownTimer = setInterval(update, 1000);
-
-      btnGo.disabled = false;
+      tick();
+      timer = setInterval(tick, 1000);
     }
 
     function closeModal() {
-      clearInterval(countdownTimer);
+      clearInterval(timer);
       document.getElementById('overlay').classList.remove('show');
     }
 
     document.getElementById('btnCancel').addEventListener('click', closeModal);
     document.getElementById('btnGo').addEventListener('click', () => {
-      clearInterval(countdownTimer);
+      clearInterval(timer);
       window.open(currentUrl, '_blank');
       closeModal();
     });
     document.getElementById('overlay').addEventListener('click', e => {
-      if (e.target === document.getElementById('overlay')) closeModal();
+      if (e.target.id === 'overlay') closeModal();
     });
 
-    // INIT
+    /* ── INIT ── */
     buildCategories();
     renderApps();
   </script>
