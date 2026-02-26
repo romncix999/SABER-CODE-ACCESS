@@ -11,803 +11,595 @@
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
     :root {
-      --red: #e00;
-      --red-bright: #ff1a1a;
-      --red-dark: #8b0000;
-      --black: #0a0a0a;
-      --black-2: #111;
-      --black-3: #1a1a1a;
-      --black-4: #222;
-      --white: #f5f5f5;
-      --gray: #888;
-      --gray-light: #bbb;
+      --primary: #e60000;
+      --primary-hover: #ff1a1a;
+      --bg-main: #0a0a0c;
+      --bg-card: rgba(20, 20, 22, 0.75);
+      --text-main: #ffffff;
+      --text-muted: #a0a0a5;
+      --border-color: rgba(255, 255, 255, 0.08);
       --font-display: 'Bebas Neue', sans-serif;
       --font-body: 'Cairo', sans-serif;
     }
 
     html, body {
-      width: 100%; height: 100%;
-      background: var(--black);
-      color: var(--white);
+      width: 100%; min-height: 100%;
+      background: var(--bg-main);
+      color: var(--text-main);
       font-family: var(--font-body);
       overflow-x: hidden;
     }
 
-    body::before {
-      content: '';
+    /* ══ BACKGROUND IMAGE ══ */
+    .bg-image {
       position: fixed;
       inset: 0;
-      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+      /* 🖼️ غيّر الرابط أدناه بصورة التطبيق الخاصة بك */
+      background-image: url('https://images.unsplash.com/photo-1518770660439-4636190af475?w=1600&q=80');
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+      z-index: -2;
+      filter: brightness(0.22) saturate(0.6);
+    }
+    /* طبقة تدرج فوق الصورة */
+    .bg-overlay {
+      position: fixed;
+      inset: 0;
+      background:
+        radial-gradient(circle at 50% 0%, rgba(230,0,0,0.12) 0%, transparent 65%),
+        linear-gradient(180deg, rgba(10,10,12,0.55) 0%, rgba(10,10,12,0.85) 100%);
+      z-index: -1;
       pointer-events: none;
-      z-index: 9999;
-      opacity: 0.4;
     }
 
-    /* ── HEADER ── */
+    /* ══ HEADER ══ */
     header {
       position: sticky; top: 0; z-index: 100;
-      background: rgba(10,10,10,0.92);
-      backdrop-filter: blur(18px);
-      border-bottom: 1px solid rgba(220,0,0,0.3);
-      padding: 0 20px;
+      background: rgba(10, 10, 12, 0.75);
+      backdrop-filter: blur(22px);
+      -webkit-backdrop-filter: blur(22px);
+      border-bottom: 1px solid var(--border-color);
+      padding: 10px 20px;
     }
-
     .header-inner {
-      max-width: 960px;
-      margin: 0 auto;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      height: 62px;
-      gap: 16px;
+      max-width: 1000px; margin: 0 auto;
+      display: flex; align-items: center; justify-content: space-between; gap: 20px;
     }
-
     .logo {
-      font-family: var(--font-display);
-      font-size: 26px;
-      letter-spacing: 2px;
-      white-space: nowrap;
-      background: linear-gradient(135deg, var(--red-bright), #ff6666);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
-      flex-shrink: 0;
+      font-family: var(--font-display); font-size: 28px; letter-spacing: 2px;
+      background: linear-gradient(135deg, #fff, #aaa);
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+      display: flex; align-items: center; gap: 5px;
     }
-    .logo span {
-      background: linear-gradient(135deg, #fff, #bbb);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
-    }
+    .logo span { color: var(--primary); -webkit-text-fill-color: var(--primary); }
 
-    .search-wrap {
-      flex: 1; max-width: 400px;
-      position: relative;
-    }
-    .search-wrap i {
-      position: absolute;
-      right: 14px; top: 50%;
-      transform: translateY(-50%);
-      color: var(--gray);
-      font-size: 14px;
-      pointer-events: none;
-    }
+    .search-wrap { flex: 1; max-width: 450px; position: relative; }
+    .search-wrap i { position: absolute; right: 16px; top: 50%; transform: translateY(-50%); color: var(--text-muted); font-size: 14px; }
     .search-input {
-      width: 100%;
-      padding: 10px 40px 10px 16px;
-      background: var(--black-4);
-      border: 1px solid rgba(220,0,0,0.25);
-      border-radius: 50px;
-      color: var(--white);
-      font-family: var(--font-body);
-      font-size: 14px;
-      outline: none;
-      transition: border-color .3s, box-shadow .3s;
+      width: 100%; padding: 12px 45px 12px 20px;
+      background: rgba(255,255,255,0.03);
+      border: 1px solid var(--border-color); border-radius: 50px;
+      color: var(--text-main); font-family: var(--font-body); font-size: 14px;
+      transition: all 0.3s ease;
     }
-    .search-input::placeholder { color: var(--gray); }
-    .search-input:focus {
-      border-color: var(--red);
-      box-shadow: 0 0 0 3px rgba(220,0,0,.12);
-    }
+    .search-input:focus { border-color: var(--primary); background: rgba(255,255,255,0.05); outline: none; box-shadow: 0 0 15px rgba(230,0,0,0.2); }
 
-    /* ── MAIN ── */
-    main {
-      max-width: 960px;
-      margin: 0 auto;
-      padding: 28px 16px 80px;
-    }
+    /* ══ MAIN ══ */
+    main { max-width: 1000px; margin: 0 auto; padding: 30px 20px 80px; }
 
-    /* ── HERO ── */
-    .hero {
-      position: relative;
-      border-radius: 18px;
-      overflow: hidden;
-      margin-bottom: 36px;
-      height: 165px;
-      display: flex;
-      align-items: center;
-      padding: 28px;
-      background: linear-gradient(135deg, #150000, #2a0000, #0a0a0a);
-      border: 1px solid rgba(220,0,0,0.3);
-    }
-    .hero::before {
-      content: '';
-      position: absolute; inset: 0;
-      background:
-        radial-gradient(ellipse at 15% 50%, rgba(220,0,0,.22) 0%, transparent 60%),
-        radial-gradient(ellipse at 85% 50%, rgba(139,0,0,.15) 0%, transparent 60%);
-    }
-    .hero-grid {
-      position: absolute; inset: 0;
-      background-image:
-        linear-gradient(rgba(220,0,0,.07) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(220,0,0,.07) 1px, transparent 1px);
-      background-size: 32px 32px;
-    }
-    .hero-content { position: relative; z-index: 1; }
-    .hero-title {
-      font-family: var(--font-display);
-      font-size: clamp(30px, 5vw, 48px);
-      letter-spacing: 4px;
-      line-height: 1;
-      color: var(--white);
-    }
-    .hero-title em { color: var(--red-bright); font-style: normal; }
-    .hero-sub {
-      margin-top: 8px;
-      font-size: 14px;
-      color: var(--gray-light);
-      font-weight: 300;
-    }
-
-    /* ── SECTION HEADER ── */
-    .section-header {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      margin-bottom: 18px;
-    }
+    /* ══ SECTION TITLE ══ */
     .section-title {
       font-family: var(--font-display);
-      font-size: 22px;
-      letter-spacing: 2px;
-      color: var(--white);
-      white-space: nowrap;
+      font-size: 26px; letter-spacing: 2px;
+      color: #fff; margin-bottom: 22px;
+      display: flex; align-items: center; gap: 10px;
     }
-    .section-line {
-      flex: 1; height: 1px;
-      background: linear-gradient(to left, transparent, rgba(220,0,0,.5));
+    .section-title::after {
+      content: ''; flex: 1; height: 1px;
+      background: linear-gradient(90deg, rgba(230,0,0,0.4), transparent);
     }
-    .section-badge {
-      font-size: 11px;
-      background: var(--red-dark);
-      color: var(--red-bright);
-      border: 1px solid rgba(220,0,0,.4);
-      padding: 2px 10px;
-      border-radius: 50px;
-      font-weight: 700;
-      letter-spacing: 1px;
-    }
+    .section-title i { color: var(--primary); font-size: 20px; }
 
-    /* ── CATEGORIES ── */
-    .categories {
-      display: flex;
-      gap: 8px;
-      overflow-x: auto;
-      padding-bottom: 8px;
-      margin-bottom: 26px;
-      scrollbar-width: none;
-    }
-    .categories::-webkit-scrollbar { display: none; }
-    .cat-btn {
-      padding: 7px 20px;
-      border-radius: 50px;
-      border: 1px solid rgba(220,0,0,.3);
-      background: var(--black-3);
-      color: var(--gray-light);
-      font-family: var(--font-body);
-      font-size: 13px;
-      font-weight: 600;
-      cursor: pointer;
-      white-space: nowrap;
-      transition: all .25s;
-    }
-    .cat-btn:hover, .cat-btn.active {
-      background: var(--red);
-      border-color: var(--red);
-      color: #fff;
-    }
-
-    /* ── APPS GRID ── */
+    /* ══ APPS GRID ══ */
     .apps-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(270px, 1fr));
-      gap: 16px;
+      grid-template-columns: repeat(auto-fill, minmax(290px, 1fr));
+      gap: 20px;
     }
 
-    /* ── APP CARD ── */
+    /* ══ APP CARD ══ */
     .app-card {
-      background: var(--black-3);
-      border: 1px solid rgba(255,255,255,.06);
-      border-radius: 16px;
-      overflow: hidden;
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: 20px; padding: 20px;
       cursor: pointer;
-      transition: transform .3s, border-color .3s, box-shadow .3s;
-      animation: fadeUp .5s ease both;
+      backdrop-filter: blur(14px);
+      transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      animation: fadeUp 0.6s ease backwards;
+      display: flex; flex-direction: column; gap: 15px;
     }
     .app-card:hover {
-      transform: translateY(-5px);
-      border-color: rgba(220,0,0,.55);
-      box-shadow: 0 18px 44px rgba(220,0,0,.13), 0 4px 14px rgba(0,0,0,.5);
+      transform: translateY(-8px);
+      border-color: rgba(230,0,0,0.4);
+      box-shadow: 0 15px 35px rgba(0,0,0,0.5), 0 0 22px rgba(230,0,0,0.12);
     }
 
-    .card-top {
-      padding: 18px 18px 14px;
-      display: flex;
-      align-items: center;
-      gap: 14px;
-    }
+    .card-top { display: flex; align-items: center; gap: 16px; }
+
     .app-icon-wrap {
-      width: 58px; height: 58px;
-      border-radius: 15px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      flex-shrink: 0;
-      font-size: 22px;
-      border: 1px solid rgba(255,255,255,.08);
+      width: 64px; height: 64px; border-radius: 16px;
+      background: #ffffff;
+      display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0; overflow: hidden;
+      border: 2px solid rgba(255,255,255,0.1);
     }
+    .app-icon-wrap img { width: 65%; height: 65%; object-fit: contain; }
+
     .card-meta { flex: 1; min-width: 0; }
-    .app-name {
-      font-size: 16px;
-      font-weight: 700;
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
-    }
-    .app-category {
-      font-size: 12px;
-      color: var(--red-bright);
-      font-weight: 600;
-      margin-top: 2px;
-    }
-    .app-rating {
-      display: flex;
-      align-items: center;
-      gap: 4px;
-      margin-top: 4px;
-      font-size: 12px;
-      color: var(--gray);
-    }
-    .app-rating i { color: #f5a623; font-size: 10px; }
+    .app-name { font-size: 18px; font-weight: 700; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .app-category { font-size: 12px; color: var(--primary); font-weight: 600; margin-top: 4px; }
 
-    .card-desc {
-      padding: 0 18px 14px;
-      font-size: 13px;
-      color: var(--gray);
-      line-height: 1.55;
-      font-weight: 300;
-    }
+    .card-desc { font-size: 14px; color: var(--text-muted); line-height: 1.6; font-weight: 400; flex-grow: 1; }
+
     .card-footer {
-      padding: 12px 18px;
-      border-top: 1px solid rgba(255,255,255,.05);
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
+      display: flex; align-items: center; justify-content: space-between;
+      padding-top: 15px; border-top: 1px solid var(--border-color);
     }
-    .app-downloads {
-      font-size: 11px;
-      color: var(--gray);
-      display: flex;
-      align-items: center;
-      gap: 5px;
-    }
+    .app-rating { display: flex; align-items: center; gap: 6px; font-size: 13px; font-weight: 600; color: #fff; }
+    .app-rating i { color: #ffb400; font-size: 12px; }
+
     .open-btn {
-      padding: 7px 20px;
-      background: linear-gradient(135deg, var(--red), var(--red-dark));
-      border: none;
+      padding: 8px 20px;
+      background: rgba(230,0,0,0.1);
+      border: 1px solid rgba(230,0,0,0.3);
       border-radius: 50px;
-      color: #fff;
-      font-family: var(--font-body);
-      font-size: 13px;
-      font-weight: 700;
-      cursor: pointer;
-      transition: opacity .2s, transform .2s;
-      letter-spacing: .5px;
+      color: var(--primary);
+      font-family: var(--font-body); font-size: 13px; font-weight: 700;
+      cursor: pointer; transition: all 0.3s ease;
     }
-    .open-btn:hover { opacity: .85; transform: scale(1.04); }
+    .app-card:hover .open-btn { background: var(--primary); color: #fff; border-color: var(--primary); }
 
-    /* ── NO RESULTS ── */
-    .no-results {
-      display: none;
-      text-align: center;
-      padding: 60px 20px;
-      color: var(--gray);
-    }
-    .no-results i {
-      font-size: 42px;
-      margin-bottom: 14px;
-      color: rgba(220,0,0,.3);
-      display: block;
-    }
+    /* ══ NO RESULTS ══ */
+    .no-results { display: none; text-align: center; padding: 60px 20px; color: var(--text-muted); }
+    .no-results i { font-size: 50px; margin-bottom: 15px; color: rgba(230,0,0,0.3); display: block; }
 
-    /* ── MODAL ── */
+    /* ══ MODAL ══ */
     .overlay {
-      display: none;
-      position: fixed; inset: 0;
-      background: rgba(0,0,0,.87);
-      backdrop-filter: blur(10px);
-      z-index: 1000;
-      align-items: center;
-      justify-content: center;
-      padding: 16px;
+      display: none; position: fixed; inset: 0;
+      background: rgba(0,0,0,0.82); backdrop-filter: blur(10px);
+      z-index: 1000; align-items: center; justify-content: center; padding: 20px;
+      opacity: 0; transition: opacity 0.3s ease;
     }
-    .overlay.show { display: flex; }
+    .overlay.show { display: flex; opacity: 1; }
 
     .modal {
-      background: var(--black-3);
-      border: 1px solid rgba(220,0,0,.45);
-      border-radius: 22px;
-      width: 100%;
-      max-width: 360px;
-      overflow: hidden;
-      animation: scaleIn .32s cubic-bezier(.34,1.56,.64,1) both;
+      background: #111; border: 1px solid rgba(230,0,0,0.3);
+      border-radius: 24px; width: 100%; max-width: 420px;
+      overflow: hidden; box-shadow: 0 25px 60px rgba(0,0,0,0.6);
+      transform: scale(0.88); transition: transform 0.35s cubic-bezier(0.175, 0.885, 0.32, 1.275);
     }
+    .overlay.show .modal { transform: scale(1); }
 
+    /* ─ Modal Header ─ */
     .modal-top {
-      background: linear-gradient(135deg, #1a0000, #0f0f0f);
-      padding: 28px 24px 22px;
-      text-align: center;
-      border-bottom: 1px solid rgba(220,0,0,.2);
-    }
-    .modal-icon {
-      width: 74px; height: 74px;
-      border-radius: 20px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      margin: 0 auto 14px;
-      font-size: 28px;
-      border: 2px solid rgba(255,255,255,.1);
-    }
-    .modal-name {
-      font-family: var(--font-display);
-      font-size: 30px;
-      letter-spacing: 2px;
-    }
-    .modal-url {
-      font-size: 12px;
-      color: var(--red-bright);
-      margin-top: 4px;
-      opacity: .8;
-    }
-
-    .modal-body { padding: 24px; text-align: center; }
-
-    .countdown-label {
-      font-size: 13px;
-      color: var(--gray);
-      margin-bottom: 14px;
-    }
-    .countdown-ring {
+      background: linear-gradient(135deg, rgba(230,0,0,0.12), transparent);
+      padding: 30px 24px 20px; text-align: center; border-bottom: 1px solid var(--border-color);
       position: relative;
-      width: 92px; height: 92px;
-      margin: 0 auto 20px;
     }
-    .countdown-ring svg {
-      transform: rotate(-90deg);
-      width: 92px; height: 92px;
+    .modal-close {
+      position: absolute; top: 14px; left: 16px;
+      width: 32px; height: 32px; border-radius: 50%;
+      background: rgba(255,255,255,0.06); border: none; color: var(--text-muted);
+      cursor: pointer; font-size: 14px; display: flex; align-items: center; justify-content: center;
+      transition: all 0.2s;
     }
-    .countdown-ring circle {
-      fill: none;
-      stroke-width: 4;
-      stroke-linecap: round;
+    .modal-close:hover { background: rgba(230,0,0,0.2); color: #fff; }
+
+    .modal-icon {
+      width: 80px; height: 80px; border-radius: 20px; background: #fff;
+      display: flex; align-items: center; justify-content: center;
+      margin: 0 auto 14px; border: 3px solid rgba(230,0,0,0.2); box-shadow: 0 10px 25px rgba(0,0,0,0.35);
     }
-    .ring-bg { stroke: rgba(255,255,255,.08); }
+    .modal-icon img { width: 60%; height: 60%; object-fit: contain; }
+    .modal-name { font-family: var(--font-display); font-size: 30px; letter-spacing: 1px; }
+    .modal-cat  { font-size: 13px; color: var(--primary); font-weight: 700; margin-top: 4px; }
+
+    /* ─ Modal Body ─ */
+    .modal-body { padding: 24px; }
+
+    /* ── STEP 1: تفاصيل ── */
+    .step-details { display: flex; flex-direction: column; gap: 18px; }
+
+    .detail-desc { font-size: 14px; color: var(--text-muted); line-height: 1.7; text-align: center; }
+
+    .detail-stats {
+      display: flex; gap: 10px; justify-content: center;
+    }
+    .stat-badge {
+      display: flex; align-items: center; gap: 6px;
+      padding: 8px 16px; border-radius: 50px;
+      background: rgba(255,255,255,0.04);
+      border: 1px solid var(--border-color);
+      font-size: 13px; font-weight: 600;
+    }
+    .stat-badge i { color: #ffb400; }
+
+    .btn-download {
+      width: 100%; padding: 15px;
+      background: linear-gradient(135deg, var(--primary), #cc0000);
+      border: none; border-radius: 16px;
+      color: #fff; font-family: var(--font-body); font-size: 16px; font-weight: 700;
+      cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 10px;
+      box-shadow: 0 6px 20px rgba(230,0,0,0.4);
+      transition: all 0.3s ease;
+    }
+    .btn-download:hover { transform: translateY(-2px); box-shadow: 0 10px 28px rgba(230,0,0,0.5); }
+    .btn-download i { font-size: 18px; }
+
+    /* ── STEP 2: إدخال الكود ── */
+    .step-code { display: none; flex-direction: column; gap: 18px; align-items: center; }
+
+    .step-code .code-title { font-family: var(--font-display); font-size: 22px; letter-spacing: 1px; color: #fff; }
+    .step-code .code-sub { font-size: 13px; color: var(--text-muted); text-align: center; }
+
+    .code-input-wrap { width: 100%; position: relative; }
+    .code-input {
+      width: 100%; padding: 14px 50px 14px 20px; text-align: center; letter-spacing: 4px;
+      background: rgba(255,255,255,0.04);
+      border: 1px solid var(--border-color); border-radius: 14px;
+      color: #fff; font-family: var(--font-display); font-size: 22px;
+      transition: all 0.3s; text-transform: uppercase;
+    }
+    .code-input:focus { border-color: var(--primary); outline: none; box-shadow: 0 0 18px rgba(230,0,0,0.25); }
+    .code-input.error { border-color: #ff4444; animation: shake 0.4s ease; }
+    .code-input.success { border-color: #00cc66; }
+
+    .error-msg {
+      font-size: 13px; color: #ff4444; text-align: center;
+      display: none; font-weight: 600;
+    }
+    .error-msg.show { display: block; }
+
+    .code-actions { display: flex; gap: 10px; width: 100%; }
+    .btn-back {
+      flex: 0 0 auto; padding: 13px 18px;
+      background: rgba(255,255,255,0.05); border: 1px solid var(--border-color);
+      border-radius: 14px; color: var(--text-muted);
+      font-family: var(--font-body); font-size: 14px; cursor: pointer;
+      transition: all 0.2s;
+    }
+    .btn-back:hover { background: rgba(255,255,255,0.1); color: #fff; }
+    .btn-confirm {
+      flex: 1; padding: 13px;
+      background: var(--primary); border: none; border-radius: 14px;
+      color: #fff; font-family: var(--font-body); font-size: 15px; font-weight: 700;
+      cursor: pointer; transition: all 0.3s;
+    }
+    .btn-confirm:hover { background: var(--primary-hover); }
+
+    /* ── STEP 3: العداد ── */
+    .step-countdown { display: none; flex-direction: column; align-items: center; gap: 20px; }
+
+    .countdown-ring { position: relative; width: 110px; height: 110px; }
+    .countdown-ring svg { transform: rotate(-90deg); width: 110px; height: 110px; }
+    .countdown-ring circle { fill: none; stroke-width: 5; stroke-linecap: round; }
+    .ring-bg { stroke: rgba(255,255,255,0.05); }
     .ring-fg {
-      stroke: var(--red-bright);
-      stroke-dasharray: 263.9;
-      stroke-dashoffset: 0;
+      stroke: var(--primary); stroke-dasharray: 314; stroke-dashoffset: 0;
       transition: stroke-dashoffset 1s linear;
-      filter: drop-shadow(0 0 7px var(--red));
+      filter: drop-shadow(0 0 6px var(--primary));
     }
     .countdown-number {
-      position: absolute; inset: 0;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      font-family: var(--font-display);
-      font-size: 34px;
-      color: var(--white);
-      line-height: 1;
+      position: absolute; inset: 0; display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+      font-family: var(--font-display); font-size: 42px; color: #fff; line-height: 1;
     }
-    .countdown-number span {
-      font-size: 11px;
-      color: var(--gray);
-      font-family: var(--font-body);
-      font-weight: 400;
-      margin-top: 2px;
-    }
+    .countdown-sub { font-size: 11px; color: var(--text-muted); font-family: var(--font-body); letter-spacing: 0; margin-top: 2px; }
 
-    .progress-bar {
-      height: 3px;
-      background: rgba(255,255,255,.06);
-      border-radius: 50px;
-      overflow: hidden;
-      margin-bottom: 22px;
-    }
-    .progress-fill {
-      height: 100%;
-      background: linear-gradient(to right, var(--red-dark), var(--red-bright));
-      border-radius: 50px;
-      transition: width 1s linear;
-      width: 100%;
-    }
+    .redirect-msg { font-size: 14px; color: var(--text-muted); text-align: center; line-height: 1.6; }
+    .redirect-msg strong { color: #fff; }
 
-    .modal-actions { display: flex; gap: 10px; }
-
-    .btn-cancel {
-      flex: 1;
-      padding: 13px;
-      background: var(--black-4);
-      border: 1px solid rgba(255,255,255,.1);
-      border-radius: 14px;
-      color: var(--gray-light);
-      font-family: var(--font-body);
-      font-size: 14px;
-      font-weight: 600;
-      cursor: pointer;
-      transition: all .2s;
+    .btn-go-now {
+      width: 100%; padding: 14px;
+      background: linear-gradient(135deg, #00aa44, #007733);
+      border: none; border-radius: 14px;
+      color: #fff; font-family: var(--font-body); font-size: 15px; font-weight: 700;
+      cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 8px;
+      box-shadow: 0 5px 18px rgba(0,170,68,0.35); transition: all 0.3s;
     }
-    .btn-cancel:hover { background: var(--black-2); color: var(--white); }
+    .btn-go-now:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(0,170,68,0.45); }
 
-    .btn-go {
-      flex: 1;
-      padding: 13px;
-      background: linear-gradient(135deg, var(--red), var(--red-dark));
-      border: none;
-      border-radius: 14px;
-      color: #fff;
-      font-family: var(--font-body);
-      font-size: 14px;
-      font-weight: 700;
-      cursor: pointer;
-      transition: opacity .2s;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 7px;
-    }
-    .btn-go:hover { opacity: .85; }
-    .btn-go:disabled { opacity: .4; cursor: not-allowed; }
-
-    /* ── FOOTER ── */
-    footer {
-      text-align: center;
-      padding: 26px;
-      font-size: 12px;
-      color: rgba(255,255,255,.14);
-      border-top: 1px solid rgba(255,255,255,.04);
-      font-family: var(--font-display);
-      letter-spacing: 2px;
-    }
-    footer span { color: var(--red); }
-
-    /* ── ANIMATIONS ── */
+    /* ══ ANIMATIONS ══ */
     @keyframes fadeUp {
-      from { opacity: 0; transform: translateY(22px); }
+      from { opacity: 0; transform: translateY(30px); }
       to   { opacity: 1; transform: translateY(0); }
     }
-    @keyframes scaleIn {
-      from { opacity: 0; transform: scale(.84); }
-      to   { opacity: 1; transform: scale(1); }
+    @keyframes shake {
+      0%,100% { transform: translateX(0); }
+      20%,60%  { transform: translateX(-8px); }
+      40%,80%  { transform: translateX(8px); }
     }
 
-    .app-card:nth-child(1) { animation-delay: .05s; }
-    .app-card:nth-child(2) { animation-delay: .10s; }
-    .app-card:nth-child(3) { animation-delay: .15s; }
-    .app-card:nth-child(4) { animation-delay: .20s; }
-    .app-card:nth-child(5) { animation-delay: .25s; }
-    .app-card:nth-child(6) { animation-delay: .30s; }
-
-    /* ── SCROLLBAR ── */
-    ::-webkit-scrollbar { width: 4px; }
-    ::-webkit-scrollbar-track { background: var(--black); }
-    ::-webkit-scrollbar-thumb { background: var(--red-dark); border-radius: 4px; }
-
-    /* ── RESPONSIVE ── */
+    /* ══ RESPONSIVE ══ */
     @media (max-width: 600px) {
-      .logo { font-size: 20px; }
-      .apps-grid { grid-template-columns: 1fr; }
-      .hero { height: 130px; }
+      .app-card { padding: 15px; }
+      .app-icon-wrap { width: 52px; height: 52px; }
+      .modal-name { font-size: 26px; }
     }
   </style>
 </head>
 <body>
 
-  <!-- ─── HEADER ─── -->
+  <!-- خلفية الصورة -->
+  <div class="bg-image"></div>
+  <div class="bg-overlay"></div>
+
   <header>
     <div class="header-inner">
-      <div class="logo">SABER X<span> TOOLS</span></div>
+      <div class="logo">TOOLS <span>SABER X</span></div>
       <div class="search-wrap">
         <i class="fa-solid fa-magnifying-glass"></i>
-        <input type="text" class="search-input" id="searchInput" placeholder="ابحث عن تطبيق أو موقع..." />
+        <input type="text" class="search-input" id="searchInput" placeholder="ابحث عن تطبيق..." autocomplete="off" />
       </div>
     </div>
   </header>
 
-  <!-- ─── MAIN ─── -->
   <main>
-
-    <div class="hero">
-      <div class="hero-grid"></div>
-      <div class="hero-content">
-        <div class="hero-title">SABER X <em>TOOLS</em></div>
-        <div class="hero-sub">مجموعة أدوات ومواقع مختارة بعناية</div>
-      </div>
-    </div>
-
-    <div class="categories" id="categoriesBar"></div>
-
-    <div class="section-header">
-      <div class="section-title">التطبيقات والمواقع</div>
-      <div class="section-line"></div>
-      <div class="section-badge" id="appCount">0</div>
-    </div>
+    <div class="section-title"><i class="fa-solid fa-rocket"></i> التطبيقات</div>
 
     <div class="apps-grid" id="appsGrid"></div>
-    <div class="no-results" id="noResults">
-      <i class="fa-solid fa-circle-xmark"></i>
-      لا توجد نتائج مطابقة للبحث
-    </div>
 
+    <div class="no-results" id="noResults">
+      <i class="fa-solid fa-ghost"></i>
+      <h3>لا توجد نتائج مطابقة</h3>
+      <p>حاول استخدام كلمات مفتاحية مختلفة</p>
+    </div>
   </main>
 
-  <!-- ─── FOOTER ─── -->
-  <footer>SABER X <span>TOOLS</span> &mdash; 2025</footer>
-
-  <!-- ─── MODAL ─── -->
+  <!-- ══ MODAL ══ -->
   <div class="overlay" id="overlay">
     <div class="modal">
+
+      <!-- Header -->
       <div class="modal-top">
+        <button class="modal-close" id="btnClose"><i class="fa-solid fa-xmark"></i></button>
         <div class="modal-icon" id="modalIcon"></div>
-        <div class="modal-name" id="modalName"></div>
-        <div class="modal-url"  id="modalUrl"></div>
+        <div class="modal-name"  id="modalName"></div>
+        <div class="modal-cat"   id="modalCat"></div>
       </div>
+
+      <!-- Body -->
       <div class="modal-body">
-        <div class="countdown-label">سيتم التحويل خلال</div>
-        <div class="countdown-ring">
-          <svg viewBox="0 0 92 92">
-            <circle class="ring-bg" cx="46" cy="46" r="42"/>
-            <circle class="ring-fg" id="ringFg" cx="46" cy="46" r="42"/>
-          </svg>
-          <div class="countdown-number">
-            <div id="countdownNum">10</div>
-            <span>ثانية</span>
+
+        <!-- الخطوة 1: تفاصيل -->
+        <div class="step-details" id="stepDetails">
+          <div class="detail-desc" id="modalDesc"></div>
+          <div class="detail-stats">
+            <div class="stat-badge"><i class="fa-solid fa-star"></i> <span id="modalRating"></span></div>
+            <div class="stat-badge"><i class="fa-solid fa-link" style="color:#aaa"></i> <span id="modalUrl"></span></div>
+          </div>
+          <button class="btn-download" id="btnDownload">
+            <i class="fa-solid fa-download"></i> تحميل التطبيق
+          </button>
+        </div>
+
+        <!-- الخطوة 2: إدخال الكود -->
+        <div class="step-code" id="stepCode">
+          <div class="code-title">أدخل الكود</div>
+          <div class="code-sub">هذا التطبيق محمي بكود خاص<br/>أدخل الكود للمتابعة</div>
+          <div class="code-input-wrap">
+            <input type="text" class="code-input" id="codeInput" placeholder="XXXX-0000" maxlength="20" autocomplete="off" />
+          </div>
+          <div class="error-msg" id="errorMsg"><i class="fa-solid fa-circle-xmark"></i> كود غير صحيح، حاول مجدداً</div>
+          <div class="code-actions">
+            <button class="btn-back" id="btnBack"><i class="fa-solid fa-arrow-right"></i></button>
+            <button class="btn-confirm" id="btnConfirm"><i class="fa-solid fa-check"></i> تأكيد</button>
           </div>
         </div>
-        <div class="progress-bar">
-          <div class="progress-fill" id="progressFill"></div>
-        </div>
-        <div class="modal-actions">
-          <button class="btn-cancel" id="btnCancel">
-            <i class="fa-solid fa-xmark"></i> إلغاء
-          </button>
-          <button class="btn-go" id="btnGo">
-            <i class="fa-solid fa-arrow-up-right-from-square"></i> انتقال الآن
-          </button>
-        </div>
-      </div>
-    </div>
-  </div>
 
+        <!-- الخطوة 3: عداد الانتظار -->
+        <div class="step-countdown" id="stepCountdown">
+          <div class="countdown-ring">
+            <svg viewBox="0 0 110 110">
+              <circle class="ring-bg" cx="55" cy="55" r="50"/>
+              <circle class="ring-fg" id="ringFg" cx="55" cy="55" r="50"/>
+            </svg>
+            <div class="countdown-number">
+              <div id="countdownNum">10</div>
+              <div class="countdown-sub">ثانية</div>
+            </div>
+          </div>
+          <div class="redirect-msg">سيتم توجيهك تلقائياً إلى<br/><strong id="redirectName"></strong></div>
+          <button class="btn-go-now" id="btnGoNow">
+            <i class="fa-solid fa-rocket"></i> انتقل الآن
+          </button>
+        </div>
+
+      </div><!-- /modal-body -->
+    </div><!-- /modal -->
+  </div><!-- /overlay -->
+
+  <!-- ══ SCRIPTS ══ -->
+  <!-- 1. ملف الروابط والأكواد -->
+  <script src="api/lien.js"></script>
+
+  <!-- 2. بيانات التطبيقات (الاسم، الوصف، الفئة، التقييم) -->
   <script>
-    /* ══════════════════════════════════════════════
-       DATA  —  أضف مواقعك هنا بنفس الصيغة
-    ══════════════════════════════════════════════ */
-    const APPS_DATA = {
-      apps: [
-        {
-          id: 1,
-          name: "YouTube",
-          category: "Video",
-          description: "منصة مشاركة الفيديو الأكبر في العالم",
-          url: "https://www.youtube.com",
-          icon: "video",
-          rating: 4.8,
-          downloads: "10B+"
-        },
-        {
-          id: 2,
-          name: "GitHub",
-          category: "Development",
-          description: "منصة استضافة الكود المصدري والتعاون البرمجي",
-          url: "https://www.github.com",
-          icon: "code",
-          rating: 4.9,
-          downloads: "500M+"
-        }
-        /* أضف المزيد هنا على نفس النمط:
-        ,{
-          id: 3,
-          name: "اسم الموقع",
-          category: "Tools",
-          description: "وصف قصير",
-          url: "https://example.com",
-          icon: "tool",
-          rating: 4.5,
-          downloads: "100M+"
-        }
-        */
-      ],
-      categories: ["الكل", "Video", "Development", "Social", "Tools", "News"]
-    };
+    const APPS_DATA = [
+      { id: 1, name: "YouTube",       category: "فيديو",           rating: 4.8, url: "youtube.com",       description: "منصة مشاركة الفيديو الأكبر في العالم، تحتوي على ملايين المقاطع التعليمية والترفيهية." },
+      { id: 2, name: "GitHub",        category: "برمجة",           rating: 4.9, url: "github.com",        description: "منصة استضافة الكود المصدري والتعاون البرمجي الأفضل للمطورين حول العالم." },
+      { id: 3, name: "Stack Overflow",category: "برمجة",           rating: 4.7, url: "stackoverflow.com", description: "أكبر مجتمع للمبرمجين لطرح الأسئلة وإيجاد حلول للمشاكل البرمجية." },
+      { id: 4, name: "Figma",         category: "تصميم",           rating: 4.9, url: "figma.com",         description: "أداة قوية لتصميم واجهات المستخدم والعمل التعاوني بين المصممين." },
+      { id: 5, name: "X (Twitter)",   category: "تواصل اجتماعي",  rating: 4.5, url: "x.com",            description: "منصة التدوين المصغر ومتابعة أحدث الأخبار التقنية والعالمية لحظة بلحظة." },
+      { id: 6, name: "ChatGPT",       category: "ذكاء اصطناعي",   rating: 4.9, url: "chatgpt.com",       description: "مساعد الذكاء الاصطناعي الأقوى للمساعدة في البرمجة والكتابة وحل المشكلات." },
+    ];
 
-    /* ══════════════════════════════════════════════
-       ICON MAP
-    ══════════════════════════════════════════════ */
-    const ICONS = {
-      video:   { fa: 'fa-solid fa-play',      bg: 'linear-gradient(135deg,#cc0000,#660000)' },
-      code:    { fa: 'fa-solid fa-code',       bg: 'linear-gradient(135deg,#1a1a2e,#16213e)' },
-      social:  { fa: 'fa-solid fa-users',      bg: 'linear-gradient(135deg,#1877f2,#0e4f9e)' },
-      tool:    { fa: 'fa-solid fa-wrench',     bg: 'linear-gradient(135deg,#b00,#500)' },
-      news:    { fa: 'fa-solid fa-newspaper',  bg: 'linear-gradient(135deg,#333,#111)' },
-      music:   { fa: 'fa-solid fa-music',      bg: 'linear-gradient(135deg,#1db954,#0d7a36)' },
-      default: { fa: 'fa-solid fa-globe',      bg: 'linear-gradient(135deg,#700,#300)' },
-    };
-
-    const getIcon = k => ICONS[k] || ICONS.default;
-
-    /* ── Build categories ── */
-    function buildCategories() {
-      const bar = document.getElementById('categoriesBar');
-      bar.innerHTML = '';
-      APPS_DATA.categories.forEach((cat, i) => {
-        const btn = document.createElement('button');
-        btn.className = 'cat-btn' + (i === 0 ? ' active' : '');
-        btn.textContent = cat;
-        btn.dataset.cat = cat;
-        btn.addEventListener('click', () => {
-          document.querySelectorAll('.cat-btn').forEach(b => b.classList.remove('active'));
-          btn.classList.add('active');
-          renderApps(document.getElementById('searchInput').value, cat);
-        });
-        bar.appendChild(btn);
-      });
+    /* ══ UTILS ══ */
+    function getIconUrl(domain) {
+      return `https://www.google.com/s2/favicons?domain=${domain}&sz=128`;
+    }
+    function getLinkById(id) {
+      return APPS_LINKS.find(l => l.id === id) || null;
     }
 
-    /* ── Render apps ── */
-    function renderApps(query = '', category = 'الكل') {
+    /* ══ RENDER ══ */
+    function renderApps(query = '') {
       const grid   = document.getElementById('appsGrid');
       const noRes  = document.getElementById('noResults');
-      const countEl = document.getElementById('appCount');
       grid.innerHTML = '';
-
       const q = query.trim().toLowerCase();
-      const filtered = APPS_DATA.apps.filter(app => {
-        const matchCat = category === 'الكل' || app.category === category;
-        const matchQ   = !q || app.name.toLowerCase().includes(q)
-                            || app.description.includes(q)
-                            || app.category.toLowerCase().includes(q);
-        return matchCat && matchQ;
-      });
-
-      countEl.textContent = filtered.length;
+      const filtered = q
+        ? APPS_DATA.filter(a => a.name.toLowerCase().includes(q) || a.description.toLowerCase().includes(q))
+        : APPS_DATA;
 
       if (!filtered.length) { noRes.style.display = 'block'; return; }
       noRes.style.display = 'none';
 
-      filtered.forEach(app => {
-        const { fa, bg } = getIcon(app.icon);
+      filtered.forEach((app, i) => {
+        const iconUrl = getIconUrl(app.url);
         const card = document.createElement('div');
         card.className = 'app-card';
+        card.style.animationDelay = `${i * 0.08}s`;
         card.innerHTML = `
           <div class="card-top">
-            <div class="app-icon-wrap" style="background:${bg}">
-              <i class="${fa}" style="color:#fff"></i>
+            <div class="app-icon-wrap">
+              <img src="${iconUrl}" alt="${app.name}" loading="lazy" onerror="this.src='https://via.placeholder.com/64?text=App'" />
             </div>
             <div class="card-meta">
               <div class="app-name">${app.name}</div>
               <div class="app-category">${app.category}</div>
-              <div class="app-rating">
-                <i class="fa-solid fa-star"></i>
-                <span>${app.rating}</span>
-              </div>
             </div>
           </div>
           <div class="card-desc">${app.description}</div>
           <div class="card-footer">
-            <div class="app-downloads">
-              <i class="fa-solid fa-arrow-down" style="font-size:10px"></i>
-              ${app.downloads}
-            </div>
-            <button class="open-btn">
-              <i class="fa-solid fa-arrow-up-right-from-square" style="margin-left:5px;font-size:11px"></i>
-              فتح
-            </button>
+            <div class="app-rating"><i class="fa-solid fa-star"></i> ${app.rating}</div>
+            <button class="open-btn">تفاصيل <i class="fa-solid fa-arrow-left" style="margin-right:5px;font-size:11px"></i></button>
           </div>`;
-
-        const launch = () => openModal(app);
-        card.querySelector('.open-btn').addEventListener('click', e => { e.stopPropagation(); launch(); });
-        card.addEventListener('click', launch);
+        card.addEventListener('click', () => openModal(app));
         grid.appendChild(card);
       });
     }
 
-    /* ── Search ── */
-    document.getElementById('searchInput').addEventListener('input', e => {
-      const activeCat = document.querySelector('.cat-btn.active')?.dataset.cat || 'الكل';
-      renderApps(e.target.value, activeCat);
-    });
+    document.getElementById('searchInput').addEventListener('input', e => renderApps(e.target.value));
 
-    /* ══════════════════════════════════════════════
-       MODAL + COUNTDOWN
-    ══════════════════════════════════════════════ */
-    let timer = null;
-    let currentUrl = '';
-    const CIRCUMFERENCE = 2 * Math.PI * 42; // ≈ 263.9
+    /* ══ MODAL STATE ══ */
+    let currentApp   = null;
+    let currentUrl   = '';
+    let countdownTimer = null;
+    const TOTAL = 10;
+    const CIRCUMFERENCE = 2 * Math.PI * 50; // r=50
 
     function openModal(app) {
-      clearInterval(timer);
-      currentUrl = app.url;
+      currentApp = app;
+      clearInterval(countdownTimer);
 
-      const { fa, bg } = getIcon(app.icon);
-      const modalIcon = document.getElementById('modalIcon');
-      modalIcon.style.background = bg;
-      modalIcon.innerHTML = `<i class="${fa}" style="color:#fff;font-size:28px"></i>`;
+      const link = getLinkById(app.id);
+      currentUrl = link ? link.url : '#';
+
+      const iconUrl = getIconUrl(app.url);
+      document.getElementById('modalIcon').innerHTML = `<img src="${iconUrl}" alt="${app.name}" />`;
       document.getElementById('modalName').textContent = app.name;
-      document.getElementById('modalUrl').textContent  =
-        app.url.replace(/https?:\/\/(www\.)?/, '').replace(/\/$/, '');
+      document.getElementById('modalCat').textContent  = app.category;
+      document.getElementById('modalDesc').textContent = app.description;
+      document.getElementById('modalRating').textContent = `${app.rating} / 5`;
+      document.getElementById('modalUrl').textContent  = app.url;
+      document.getElementById('redirectName').textContent = app.name;
 
+      showStep('details');
       document.getElementById('overlay').classList.add('show');
-      startCountdown(10);
-    }
-
-    function startCountdown(total) {
-      let remaining = total;
-      const numEl    = document.getElementById('countdownNum');
-      const ring     = document.getElementById('ringFg');
-      const progress = document.getElementById('progressFill');
-
-      ring.style.strokeDasharray  = CIRCUMFERENCE;
-      ring.style.strokeDashoffset = 0;
-
-      function tick() {
-        numEl.textContent = remaining;
-        const pct = remaining / total;
-        ring.style.strokeDashoffset = CIRCUMFERENCE * (1 - pct);
-        progress.style.width = (pct * 100) + '%';
-        if (remaining <= 0) {
-          clearInterval(timer);
-          window.open(currentUrl, '_blank');
-          closeModal();
-          return;
-        }
-        remaining--;
-      }
-
-      tick();
-      timer = setInterval(tick, 1000);
     }
 
     function closeModal() {
-      clearInterval(timer);
+      clearInterval(countdownTimer);
       document.getElementById('overlay').classList.remove('show');
+      document.getElementById('codeInput').value = '';
+      document.getElementById('codeInput').classList.remove('error', 'success');
+      document.getElementById('errorMsg').classList.remove('show');
     }
 
-    document.getElementById('btnCancel').addEventListener('click', closeModal);
-    document.getElementById('btnGo').addEventListener('click', () => {
-      clearInterval(timer);
+    function showStep(step) {
+      document.getElementById('stepDetails').style.display   = step === 'details'   ? 'flex' : 'none';
+      document.getElementById('stepCode').style.display      = step === 'code'      ? 'flex' : 'none';
+      document.getElementById('stepCountdown').style.display = step === 'countdown' ? 'flex' : 'none';
+    }
+
+    /* ══ BUTTON: تحميل ══ */
+    document.getElementById('btnDownload').addEventListener('click', () => {
+      showStep('code');
+      setTimeout(() => document.getElementById('codeInput').focus(), 100);
+    });
+
+    /* ══ BUTTON: رجوع ══ */
+    document.getElementById('btnBack').addEventListener('click', () => {
+      document.getElementById('codeInput').value = '';
+      document.getElementById('codeInput').classList.remove('error', 'success');
+      document.getElementById('errorMsg').classList.remove('show');
+      showStep('details');
+    });
+
+    /* ══ BUTTON: تأكيد الكود ══ */
+    document.getElementById('btnConfirm').addEventListener('click', checkCode);
+    document.getElementById('codeInput').addEventListener('keydown', e => { if (e.key === 'Enter') checkCode(); });
+
+    function checkCode() {
+      const input    = document.getElementById('codeInput');
+      const errorMsg = document.getElementById('errorMsg');
+      const link     = getLinkById(currentApp.id);
+
+      if (!link) { showRedirect(); return; } // لا يوجد كود → انتقال مباشر
+
+      if (input.value.trim().toUpperCase() === link.code.toUpperCase()) {
+        input.classList.remove('error');
+        input.classList.add('success');
+        errorMsg.classList.remove('show');
+        setTimeout(() => {
+          showStep('countdown');
+          startCountdown();
+        }, 300);
+      } else {
+        input.classList.add('error');
+        errorMsg.classList.add('show');
+        setTimeout(() => input.classList.remove('error'), 500);
+      }
+    }
+
+    /* ══ COUNTDOWN ══ */
+    function startCountdown() {
+      let remaining = TOTAL;
+      const numEl   = document.getElementById('countdownNum');
+      const ring    = document.getElementById('ringFg');
+
+      ring.style.strokeDasharray  = CIRCUMFERENCE;
+      ring.style.strokeDashoffset = 0;
+      numEl.textContent = remaining;
+
+      countdownTimer = setInterval(() => {
+        remaining--;
+        numEl.textContent = remaining;
+        const pct = remaining / TOTAL;
+        ring.style.strokeDashoffset = CIRCUMFERENCE * (1 - pct);
+
+        if (remaining <= 0) {
+          clearInterval(countdownTimer);
+          window.open(currentUrl, '_blank');
+          closeModal();
+        }
+      }, 1000);
+    }
+
+    /* ══ BUTTON: انتقل الآن ══ */
+    document.getElementById('btnGoNow').addEventListener('click', () => {
+      clearInterval(countdownTimer);
       window.open(currentUrl, '_blank');
       closeModal();
     });
-    document.getElementById('overlay').addEventListener('click', e => {
-      if (e.target.id === 'overlay') closeModal();
-    });
 
-    /* ── INIT ── */
-    buildCategories();
+    /* ══ CLOSE ══ */
+    document.getElementById('btnClose').addEventListener('click', closeModal);
+    document.getElementById('overlay').addEventListener('click', e => { if (e.target.id === 'overlay') closeModal(); });
+
+    /* ══ INIT ══ */
     renderApps();
   </script>
 </body>
