@@ -1,606 +1,703 @@
 <!DOCTYPE html>
-<html lang="ar" dir="rtl">
+<html lang="en">
+
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
-  <title>SABER X TOOLS</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Cairo:wght@300;400;600;700;900&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
-  <style>
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
-    :root {
-      --primary: #e60000;
-      --primary-hover: #ff1a1a;
-      --bg-main: #0a0a0c;
-      --bg-card: rgba(20, 20, 22, 0.75);
-      --text-main: #ffffff;
-      --text-muted: #a0a0a5;
-      --border-color: rgba(255, 255, 255, 0.08);
-      --font-display: 'Bebas Neue', sans-serif;
-      --font-body: 'Cairo', sans-serif;
-    }
-
-    html, body {
-      width: 100%; min-height: 100%;
-      background: var(--bg-main);
-      color: var(--text-main);
-      font-family: var(--font-body);
-      overflow-x: hidden;
-    }
-
-    /* ══ BACKGROUND IMAGE ══ */
-    .bg-image {
-      position: fixed;
-      inset: 0;
-      /* 🖼️ غيّر الرابط أدناه بصورة التطبيق الخاصة بك */
-      background-image: url('https://images.unsplash.com/photo-1518770660439-4636190af475?w=1600&q=80');
-      background-size: cover;
-      background-position: center;
-      background-repeat: no-repeat;
-      z-index: -2;
-      filter: brightness(0.22) saturate(0.6);
-    }
-    /* طبقة تدرج فوق الصورة */
-    .bg-overlay {
-      position: fixed;
-      inset: 0;
-      background:
-        radial-gradient(circle at 50% 0%, rgba(230,0,0,0.12) 0%, transparent 65%),
-        linear-gradient(180deg, rgba(10,10,12,0.55) 0%, rgba(10,10,12,0.85) 100%);
-      z-index: -1;
-      pointer-events: none;
-    }
-
-    /* ══ HEADER ══ */
-    header {
-      position: sticky; top: 0; z-index: 100;
-      background: rgba(10, 10, 12, 0.75);
-      backdrop-filter: blur(22px);
-      -webkit-backdrop-filter: blur(22px);
-      border-bottom: 1px solid var(--border-color);
-      padding: 10px 20px;
-    }
-    .header-inner {
-      max-width: 1000px; margin: 0 auto;
-      display: flex; align-items: center; justify-content: space-between; gap: 20px;
-    }
-    .logo {
-      font-family: var(--font-display); font-size: 28px; letter-spacing: 2px;
-      background: linear-gradient(135deg, #fff, #aaa);
-      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
-      display: flex; align-items: center; gap: 5px;
-    }
-    .logo span { color: var(--primary); -webkit-text-fill-color: var(--primary); }
-
-    .search-wrap { flex: 1; max-width: 450px; position: relative; }
-    .search-wrap i { position: absolute; right: 16px; top: 50%; transform: translateY(-50%); color: var(--text-muted); font-size: 14px; }
-    .search-input {
-      width: 100%; padding: 12px 45px 12px 20px;
-      background: rgba(255,255,255,0.03);
-      border: 1px solid var(--border-color); border-radius: 50px;
-      color: var(--text-main); font-family: var(--font-body); font-size: 14px;
-      transition: all 0.3s ease;
-    }
-    .search-input:focus { border-color: var(--primary); background: rgba(255,255,255,0.05); outline: none; box-shadow: 0 0 15px rgba(230,0,0,0.2); }
-
-    /* ══ MAIN ══ */
-    main { max-width: 1000px; margin: 0 auto; padding: 30px 20px 80px; }
-
-    /* ══ SECTION TITLE ══ */
-    .section-title {
-      font-family: var(--font-display);
-      font-size: 26px; letter-spacing: 2px;
-      color: #fff; margin-bottom: 22px;
-      display: flex; align-items: center; gap: 10px;
-    }
-    .section-title::after {
-      content: ''; flex: 1; height: 1px;
-      background: linear-gradient(90deg, rgba(230,0,0,0.4), transparent);
-    }
-    .section-title i { color: var(--primary); font-size: 20px; }
-
-    /* ══ APPS GRID ══ */
-    .apps-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(290px, 1fr));
-      gap: 20px;
-    }
-
-    /* ══ APP CARD ══ */
-    .app-card {
-      background: var(--bg-card);
-      border: 1px solid var(--border-color);
-      border-radius: 20px; padding: 20px;
-      cursor: pointer;
-      backdrop-filter: blur(14px);
-      transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-      animation: fadeUp 0.6s ease backwards;
-      display: flex; flex-direction: column; gap: 15px;
-    }
-    .app-card:hover {
-      transform: translateY(-8px);
-      border-color: rgba(230,0,0,0.4);
-      box-shadow: 0 15px 35px rgba(0,0,0,0.5), 0 0 22px rgba(230,0,0,0.12);
-    }
-
-    .card-top { display: flex; align-items: center; gap: 16px; }
-
-    .app-icon-wrap {
-      width: 64px; height: 64px; border-radius: 16px;
-      background: #ffffff;
-      display: flex; align-items: center; justify-content: center;
-      flex-shrink: 0; overflow: hidden;
-      border: 2px solid rgba(255,255,255,0.1);
-    }
-    .app-icon-wrap img { width: 65%; height: 65%; object-fit: contain; }
-
-    .card-meta { flex: 1; min-width: 0; }
-    .app-name { font-size: 18px; font-weight: 700; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-    .app-category { font-size: 12px; color: var(--primary); font-weight: 600; margin-top: 4px; }
-
-    .card-desc { font-size: 14px; color: var(--text-muted); line-height: 1.6; font-weight: 400; flex-grow: 1; }
-
-    .card-footer {
-      display: flex; align-items: center; justify-content: space-between;
-      padding-top: 15px; border-top: 1px solid var(--border-color);
-    }
-    .app-rating { display: flex; align-items: center; gap: 6px; font-size: 13px; font-weight: 600; color: #fff; }
-    .app-rating i { color: #ffb400; font-size: 12px; }
-
-    .open-btn {
-      padding: 8px 20px;
-      background: rgba(230,0,0,0.1);
-      border: 1px solid rgba(230,0,0,0.3);
-      border-radius: 50px;
-      color: var(--primary);
-      font-family: var(--font-body); font-size: 13px; font-weight: 700;
-      cursor: pointer; transition: all 0.3s ease;
-    }
-    .app-card:hover .open-btn { background: var(--primary); color: #fff; border-color: var(--primary); }
-
-    /* ══ NO RESULTS ══ */
-    .no-results { display: none; text-align: center; padding: 60px 20px; color: var(--text-muted); }
-    .no-results i { font-size: 50px; margin-bottom: 15px; color: rgba(230,0,0,0.3); display: block; }
-
-    /* ══ MODAL ══ */
-    .overlay {
-      display: none; position: fixed; inset: 0;
-      background: rgba(0,0,0,0.82); backdrop-filter: blur(10px);
-      z-index: 1000; align-items: center; justify-content: center; padding: 20px;
-      opacity: 0; transition: opacity 0.3s ease;
-    }
-    .overlay.show { display: flex; opacity: 1; }
-
-    .modal {
-      background: #111; border: 1px solid rgba(230,0,0,0.3);
-      border-radius: 24px; width: 100%; max-width: 420px;
-      overflow: hidden; box-shadow: 0 25px 60px rgba(0,0,0,0.6);
-      transform: scale(0.88); transition: transform 0.35s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-    }
-    .overlay.show .modal { transform: scale(1); }
-
-    /* ─ Modal Header ─ */
-    .modal-top {
-      background: linear-gradient(135deg, rgba(230,0,0,0.12), transparent);
-      padding: 30px 24px 20px; text-align: center; border-bottom: 1px solid var(--border-color);
-      position: relative;
-    }
-    .modal-close {
-      position: absolute; top: 14px; left: 16px;
-      width: 32px; height: 32px; border-radius: 50%;
-      background: rgba(255,255,255,0.06); border: none; color: var(--text-muted);
-      cursor: pointer; font-size: 14px; display: flex; align-items: center; justify-content: center;
-      transition: all 0.2s;
-    }
-    .modal-close:hover { background: rgba(230,0,0,0.2); color: #fff; }
-
-    .modal-icon {
-      width: 80px; height: 80px; border-radius: 20px; background: #fff;
-      display: flex; align-items: center; justify-content: center;
-      margin: 0 auto 14px; border: 3px solid rgba(230,0,0,0.2); box-shadow: 0 10px 25px rgba(0,0,0,0.35);
-    }
-    .modal-icon img { width: 60%; height: 60%; object-fit: contain; }
-    .modal-name { font-family: var(--font-display); font-size: 30px; letter-spacing: 1px; }
-    .modal-cat  { font-size: 13px; color: var(--primary); font-weight: 700; margin-top: 4px; }
-
-    /* ─ Modal Body ─ */
-    .modal-body { padding: 24px; }
-
-    /* ── STEP 1: تفاصيل ── */
-    .step-details { display: flex; flex-direction: column; gap: 18px; }
-
-    .detail-desc { font-size: 14px; color: var(--text-muted); line-height: 1.7; text-align: center; }
-
-    .detail-stats {
-      display: flex; gap: 10px; justify-content: center;
-    }
-    .stat-badge {
-      display: flex; align-items: center; gap: 6px;
-      padding: 8px 16px; border-radius: 50px;
-      background: rgba(255,255,255,0.04);
-      border: 1px solid var(--border-color);
-      font-size: 13px; font-weight: 600;
-    }
-    .stat-badge i { color: #ffb400; }
-
-    .btn-download {
-      width: 100%; padding: 15px;
-      background: linear-gradient(135deg, var(--primary), #cc0000);
-      border: none; border-radius: 16px;
-      color: #fff; font-family: var(--font-body); font-size: 16px; font-weight: 700;
-      cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 10px;
-      box-shadow: 0 6px 20px rgba(230,0,0,0.4);
-      transition: all 0.3s ease;
-    }
-    .btn-download:hover { transform: translateY(-2px); box-shadow: 0 10px 28px rgba(230,0,0,0.5); }
-    .btn-download i { font-size: 18px; }
-
-    /* ── STEP 2: إدخال الكود ── */
-    .step-code { display: none; flex-direction: column; gap: 18px; align-items: center; }
-
-    .step-code .code-title { font-family: var(--font-display); font-size: 22px; letter-spacing: 1px; color: #fff; }
-    .step-code .code-sub { font-size: 13px; color: var(--text-muted); text-align: center; }
-
-    .code-input-wrap { width: 100%; position: relative; }
-    .code-input {
-      width: 100%; padding: 14px 50px 14px 20px; text-align: center; letter-spacing: 4px;
-      background: rgba(255,255,255,0.04);
-      border: 1px solid var(--border-color); border-radius: 14px;
-      color: #fff; font-family: var(--font-display); font-size: 22px;
-      transition: all 0.3s; text-transform: uppercase;
-    }
-    .code-input:focus { border-color: var(--primary); outline: none; box-shadow: 0 0 18px rgba(230,0,0,0.25); }
-    .code-input.error { border-color: #ff4444; animation: shake 0.4s ease; }
-    .code-input.success { border-color: #00cc66; }
-
-    .error-msg {
-      font-size: 13px; color: #ff4444; text-align: center;
-      display: none; font-weight: 600;
-    }
-    .error-msg.show { display: block; }
-
-    .code-actions { display: flex; gap: 10px; width: 100%; }
-    .btn-back {
-      flex: 0 0 auto; padding: 13px 18px;
-      background: rgba(255,255,255,0.05); border: 1px solid var(--border-color);
-      border-radius: 14px; color: var(--text-muted);
-      font-family: var(--font-body); font-size: 14px; cursor: pointer;
-      transition: all 0.2s;
-    }
-    .btn-back:hover { background: rgba(255,255,255,0.1); color: #fff; }
-    .btn-confirm {
-      flex: 1; padding: 13px;
-      background: var(--primary); border: none; border-radius: 14px;
-      color: #fff; font-family: var(--font-body); font-size: 15px; font-weight: 700;
-      cursor: pointer; transition: all 0.3s;
-    }
-    .btn-confirm:hover { background: var(--primary-hover); }
-
-    /* ── STEP 3: العداد ── */
-    .step-countdown { display: none; flex-direction: column; align-items: center; gap: 20px; }
-
-    .countdown-ring { position: relative; width: 110px; height: 110px; }
-    .countdown-ring svg { transform: rotate(-90deg); width: 110px; height: 110px; }
-    .countdown-ring circle { fill: none; stroke-width: 5; stroke-linecap: round; }
-    .ring-bg { stroke: rgba(255,255,255,0.05); }
-    .ring-fg {
-      stroke: var(--primary); stroke-dasharray: 314; stroke-dashoffset: 0;
-      transition: stroke-dashoffset 1s linear;
-      filter: drop-shadow(0 0 6px var(--primary));
-    }
-    .countdown-number {
-      position: absolute; inset: 0; display: flex; flex-direction: column;
-      align-items: center; justify-content: center;
-      font-family: var(--font-display); font-size: 42px; color: #fff; line-height: 1;
-    }
-    .countdown-sub { font-size: 11px; color: var(--text-muted); font-family: var(--font-body); letter-spacing: 0; margin-top: 2px; }
-
-    .redirect-msg { font-size: 14px; color: var(--text-muted); text-align: center; line-height: 1.6; }
-    .redirect-msg strong { color: #fff; }
-
-    .btn-go-now {
-      width: 100%; padding: 14px;
-      background: linear-gradient(135deg, #00aa44, #007733);
-      border: none; border-radius: 14px;
-      color: #fff; font-family: var(--font-body); font-size: 15px; font-weight: 700;
-      cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 8px;
-      box-shadow: 0 5px 18px rgba(0,170,68,0.35); transition: all 0.3s;
-    }
-    .btn-go-now:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(0,170,68,0.45); }
-
-    /* ══ ANIMATIONS ══ */
-    @keyframes fadeUp {
-      from { opacity: 0; transform: translateY(30px); }
-      to   { opacity: 1; transform: translateY(0); }
-    }
-    @keyframes shake {
-      0%,100% { transform: translateX(0); }
-      20%,60%  { transform: translateX(-8px); }
-      40%,80%  { transform: translateX(8px); }
-    }
-
-    /* ══ RESPONSIVE ══ */
-    @media (max-width: 600px) {
-      .app-card { padding: 15px; }
-      .app-icon-wrap { width: 52px; height: 52px; }
-      .modal-name { font-size: 26px; }
-    }
-  </style>
-</head>
-<body>
-
-  <!-- خلفية الصورة -->
-  <div class="bg-image"></div>
-  <div class="bg-overlay"></div>
-
-  <header>
-    <div class="header-inner">
-      <div class="logo">TOOLS <span>SABER X</span></div>
-      <div class="search-wrap">
-        <i class="fa-solid fa-magnifying-glass"></i>
-        <input type="text" class="search-input" id="searchInput" placeholder="ابحث عن تطبيق..." autocomplete="off" />
-      </div>
-    </div>
-  </header>
-
-  <main>
-    <div class="section-title"><i class="fa-solid fa-rocket"></i> التطبيقات</div>
-
-    <div class="apps-grid" id="appsGrid"></div>
-
-    <div class="no-results" id="noResults">
-      <i class="fa-solid fa-ghost"></i>
-      <h3>لا توجد نتائج مطابقة</h3>
-      <p>حاول استخدام كلمات مفتاحية مختلفة</p>
-    </div>
-  </main>
-
-  <!-- ══ MODAL ══ -->
-  <div class="overlay" id="overlay">
-    <div class="modal">
-
-      <!-- Header -->
-      <div class="modal-top">
-        <button class="modal-close" id="btnClose"><i class="fa-solid fa-xmark"></i></button>
-        <div class="modal-icon" id="modalIcon"></div>
-        <div class="modal-name"  id="modalName"></div>
-        <div class="modal-cat"   id="modalCat"></div>
-      </div>
-
-      <!-- Body -->
-      <div class="modal-body">
-
-        <!-- الخطوة 1: تفاصيل -->
-        <div class="step-details" id="stepDetails">
-          <div class="detail-desc" id="modalDesc"></div>
-          <div class="detail-stats">
-            <div class="stat-badge"><i class="fa-solid fa-star"></i> <span id="modalRating"></span></div>
-            <div class="stat-badge"><i class="fa-solid fa-link" style="color:#aaa"></i> <span id="modalUrl"></span></div>
-          </div>
-          <button class="btn-download" id="btnDownload">
-            <i class="fa-solid fa-download"></i> تحميل التطبيق
-          </button>
-        </div>
-
-        <!-- الخطوة 2: إدخال الكود -->
-        <div class="step-code" id="stepCode">
-          <div class="code-title">أدخل الكود</div>
-          <div class="code-sub">هذا التطبيق محمي بكود خاص<br/>أدخل الكود للمتابعة</div>
-          <div class="code-input-wrap">
-            <input type="text" class="code-input" id="codeInput" placeholder="XXXX-0000" maxlength="20" autocomplete="off" />
-          </div>
-          <div class="error-msg" id="errorMsg"><i class="fa-solid fa-circle-xmark"></i> كود غير صحيح، حاول مجدداً</div>
-          <div class="code-actions">
-            <button class="btn-back" id="btnBack"><i class="fa-solid fa-arrow-right"></i></button>
-            <button class="btn-confirm" id="btnConfirm"><i class="fa-solid fa-check"></i> تأكيد</button>
-          </div>
-        </div>
-
-        <!-- الخطوة 3: عداد الانتظار -->
-        <div class="step-countdown" id="stepCountdown">
-          <div class="countdown-ring">
-            <svg viewBox="0 0 110 110">
-              <circle class="ring-bg" cx="55" cy="55" r="50"/>
-              <circle class="ring-fg" id="ringFg" cx="55" cy="55" r="50"/>
-            </svg>
-            <div class="countdown-number">
-              <div id="countdownNum">10</div>
-              <div class="countdown-sub">ثانية</div>
-            </div>
-          </div>
-          <div class="redirect-msg">سيتم توجيهك تلقائياً إلى<br/><strong id="redirectName"></strong></div>
-          <button class="btn-go-now" id="btnGoNow">
-            <i class="fa-solid fa-rocket"></i> انتقل الآن
-          </button>
-        </div>
-
-      </div><!-- /modal-body -->
-    </div><!-- /modal -->
-  </div><!-- /overlay -->
-
-  <!-- ══ SCRIPTS ══ -->
-  <!-- 1. ملف الروابط والأكواد -->
-  <script src="api/lien.js"></script>
-
-  <!-- 2. بيانات التطبيقات (الاسم، الوصف، الفئة، التقييم) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-YW0QS6C7R6"></script>
   <script>
-    const APPS_DATA = [
-      { id: 1, name: "YouTube",       category: "فيديو",           rating: 4.8, url: "youtube.com",       description: "منصة مشاركة الفيديو الأكبر في العالم، تحتوي على ملايين المقاطع التعليمية والترفيهية." },
-      { id: 2, name: "GitHub",        category: "برمجة",           rating: 4.9, url: "github.com",        description: "منصة استضافة الكود المصدري والتعاون البرمجي الأفضل للمطورين حول العالم." },
-      { id: 3, name: "Stack Overflow",category: "برمجة",           rating: 4.7, url: "stackoverflow.com", description: "أكبر مجتمع للمبرمجين لطرح الأسئلة وإيجاد حلول للمشاكل البرمجية." },
-      { id: 4, name: "Figma",         category: "تصميم",           rating: 4.9, url: "figma.com",         description: "أداة قوية لتصميم واجهات المستخدم والعمل التعاوني بين المصممين." },
-      { id: 5, name: "X (Twitter)",   category: "تواصل اجتماعي",  rating: 4.5, url: "x.com",            description: "منصة التدوين المصغر ومتابعة أحدث الأخبار التقنية والعالمية لحظة بلحظة." },
-      { id: 6, name: "ChatGPT",       category: "ذكاء اصطناعي",   rating: 4.9, url: "chatgpt.com",       description: "مساعد الذكاء الاصطناعي الأقوى للمساعدة في البرمجة والكتابة وحل المشكلات." },
-    ];
+    window.dataLayer = window.dataLayer || []; function gtag() { dataLayer.push(arguments); } gtag('js', new Date());
+    gtag('config', 'G-YW0QS6C7R6');
+  </script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>SABER STORE - Rba7 mn Internet</title>
 
-    /* ══ UTILS ══ */
-    function getIconUrl(domain) {
-      return `https://www.google.com/s2/favicons?domain=${domain}&sz=128`;
-    }
-    function getLinkById(id) {
-      return APPS_LINKS.find(l => l.id === id) || null;
-    }
-
-    /* ══ RENDER ══ */
-    function renderApps(query = '') {
-      const grid   = document.getElementById('appsGrid');
-      const noRes  = document.getElementById('noResults');
-      grid.innerHTML = '';
-      const q = query.trim().toLowerCase();
-      const filtered = q
-        ? APPS_DATA.filter(a => a.name.toLowerCase().includes(q) || a.description.toLowerCase().includes(q))
-        : APPS_DATA;
-
-      if (!filtered.length) { noRes.style.display = 'block'; return; }
-      noRes.style.display = 'none';
-
-      filtered.forEach((app, i) => {
-        const iconUrl = getIconUrl(app.url);
-        const card = document.createElement('div');
-        card.className = 'app-card';
-        card.style.animationDelay = `${i * 0.08}s`;
-        card.innerHTML = `
-          <div class="card-top">
-            <div class="app-icon-wrap">
-              <img src="${iconUrl}" alt="${app.name}" loading="lazy" onerror="this.src='https://via.placeholder.com/64?text=App'" />
-            </div>
-            <div class="card-meta">
-              <div class="app-name">${app.name}</div>
-              <div class="app-category">${app.category}</div>
-            </div>
-          </div>
-          <div class="card-desc">${app.description}</div>
-          <div class="card-footer">
-            <div class="app-rating"><i class="fa-solid fa-star"></i> ${app.rating}</div>
-            <button class="open-btn">تفاصيل <i class="fa-solid fa-arrow-left" style="margin-right:5px;font-size:11px"></i></button>
-          </div>`;
-        card.addEventListener('click', () => openModal(app));
-        grid.appendChild(card);
-      });
+  <link rel="icon" type="image/png" href="https://ui-avatars.com/api/?name=S+S&background=10b981&color=fff&rounded=true">
+  <style>
+    /* Reset */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      -webkit-tap-highlight-color: transparent;
     }
 
-    document.getElementById('searchInput').addEventListener('input', e => renderApps(e.target.value));
-
-    /* ══ MODAL STATE ══ */
-    let currentApp   = null;
-    let currentUrl   = '';
-    let countdownTimer = null;
-    const TOTAL = 10;
-    const CIRCUMFERENCE = 2 * Math.PI * 50; // r=50
-
-    function openModal(app) {
-      currentApp = app;
-      clearInterval(countdownTimer);
-
-      const link = getLinkById(app.id);
-      currentUrl = link ? link.url : '#';
-
-      const iconUrl = getIconUrl(app.url);
-      document.getElementById('modalIcon').innerHTML = `<img src="${iconUrl}" alt="${app.name}" />`;
-      document.getElementById('modalName').textContent = app.name;
-      document.getElementById('modalCat').textContent  = app.category;
-      document.getElementById('modalDesc').textContent = app.description;
-      document.getElementById('modalRating').textContent = `${app.rating} / 5`;
-      document.getElementById('modalUrl').textContent  = app.url;
-      document.getElementById('redirectName').textContent = app.name;
-
-      showStep('details');
-      document.getElementById('overlay').classList.add('show');
+    body {
+      font-family: 'Segoe UI', Roboto, Helvetica, sans-serif;
+      background: #0f172a; /* Premium Dark Blue/Black */
+      color: #f8fafc;
     }
 
-    function closeModal() {
-      clearInterval(countdownTimer);
-      document.getElementById('overlay').classList.remove('show');
-      document.getElementById('codeInput').value = '';
-      document.getElementById('codeInput').classList.remove('error', 'success');
-      document.getElementById('errorMsg').classList.remove('show');
+    /* Header */
+    .header {
+      background: #020617;
+      color: #fff;
+      padding: 15px 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
+      position: sticky;
+      top: 0;
+      z-index: 100;
     }
 
-    function showStep(step) {
-      document.getElementById('stepDetails').style.display   = step === 'details'   ? 'flex' : 'none';
-      document.getElementById('stepCode').style.display      = step === 'code'      ? 'flex' : 'none';
-      document.getElementById('stepCountdown').style.display = step === 'countdown' ? 'flex' : 'none';
+    .logo {
+      font-size: 28px;
+      font-weight: 800;
+      letter-spacing: 1px;
     }
 
-    /* ══ BUTTON: تحميل ══ */
-    document.getElementById('btnDownload').addEventListener('click', () => {
-      showStep('code');
-      setTimeout(() => document.getElementById('codeInput').focus(), 100);
-    });
+    .logo .ap {
+      color: #10b981; /* Money Green */
+    }
 
-    /* ══ BUTTON: رجوع ══ */
-    document.getElementById('btnBack').addEventListener('click', () => {
-      document.getElementById('codeInput').value = '';
-      document.getElementById('codeInput').classList.remove('error', 'success');
-      document.getElementById('errorMsg').classList.remove('show');
-      showStep('details');
-    });
+    .logo .mod {
+      color: #fbbf24; /* Gold */
+    }
 
-    /* ══ BUTTON: تأكيد الكود ══ */
-    document.getElementById('btnConfirm').addEventListener('click', checkCode);
-    document.getElementById('codeInput').addEventListener('keydown', e => { if (e.key === 'Enter') checkCode(); });
+    .search-box {
+      padding: 10px 16px;
+      border-radius: 20px;
+      border: 1px solid #334155;
+      background: #1e293b;
+      color: #fff;
+      font-size: 15px;
+      outline: none;
+      transition: 0.3s;
+      min-width: 250px;
+    }
 
-    function checkCode() {
-      const input    = document.getElementById('codeInput');
-      const errorMsg = document.getElementById('errorMsg');
-      const link     = getLinkById(currentApp.id);
+    .search-box::placeholder {
+      color: #94a3b8;
+    }
 
-      if (!link) { showRedirect(); return; } // لا يوجد كود → انتقال مباشر
+    .search-box:focus {
+      border-color: #10b981;
+      box-shadow: 0 0 8px rgba(16, 185, 129, 0.4);
+    }
 
-      if (input.value.trim().toUpperCase() === link.code.toUpperCase()) {
-        input.classList.remove('error');
-        input.classList.add('success');
-        errorMsg.classList.remove('show');
-        setTimeout(() => {
-          showStep('countdown');
-          startCountdown();
-        }, 300);
-      } else {
-        input.classList.add('error');
-        errorMsg.classList.add('show');
-        setTimeout(() => input.classList.remove('error'), 500);
+    /* Hero */
+    .hero {
+      text-align: center;
+      padding: 50px 20px;
+      background: linear-gradient(135deg, #020617, #064e3b); /* Dark to Emerald */
+      color: #fff;
+      border-bottom: 2px solid #10b981;
+    }
+
+    .hero h1 {
+      font-size: 36px;
+      margin-bottom: 12px;
+      text-shadow: 0 2px 4px rgba(0,0,0,0.5);
+    }
+
+    .hero p {
+      font-size: 18px;
+      color: #a7f3d0;
+    }
+
+    /* Main Content */
+    .main-content {
+      max-width: 1200px;
+      margin: auto;
+      padding: 20px;
+    }
+
+    .content-heading {
+      text-align: center;
+      font-size: 28px;
+      font-weight: 700;
+      margin: 30px 0;
+      color: #fff;
+    }
+
+    .content-heading .sparkle {
+      color: #fbbf24;
+    }
+
+    /* Grid */
+    .app-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 20px;
+      padding: 10px;
+    }
+
+    @media (max-width: 600px) {
+      .header {
+        flex-direction: column;
+        gap: 15px;
+      }
+      .search-box {
+        width: 100%;
+        min-width: unset;
+      }
+      .app-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 12px;
+        padding: 5px;
+      }
+      .hero h1 {
+        font-size: 26px;
       }
     }
 
-    /* ══ COUNTDOWN ══ */
-    function startCountdown() {
-      let remaining = TOTAL;
-      const numEl   = document.getElementById('countdownNum');
-      const ring    = document.getElementById('ringFg');
-
-      ring.style.strokeDasharray  = CIRCUMFERENCE;
-      ring.style.strokeDashoffset = 0;
-      numEl.textContent = remaining;
-
-      countdownTimer = setInterval(() => {
-        remaining--;
-        numEl.textContent = remaining;
-        const pct = remaining / TOTAL;
-        ring.style.strokeDashoffset = CIRCUMFERENCE * (1 - pct);
-
-        if (remaining <= 0) {
-          clearInterval(countdownTimer);
-          window.open(currentUrl, '_blank');
-          closeModal();
-        }
-      }, 1000);
+    .app-card {
+      background: #1e293b;
+      padding: 20px 10px;
+      border-radius: 16px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+      text-align: center;
+      transition: all 0.3s ease;
+      cursor: pointer;
+      position: relative;
+      border: 1px solid #334155;
     }
 
-    /* ══ BUTTON: انتقل الآن ══ */
-    document.getElementById('btnGoNow').addEventListener('click', () => {
-      clearInterval(countdownTimer);
-      window.open(currentUrl, '_blank');
-      closeModal();
+    .app-card:hover {
+      transform: translateY(-8px);
+      border-color: #10b981;
+      box-shadow: 0 8px 25px rgba(16, 185, 129, 0.2);
+    }
+
+    .app-card img {
+      width: 85px;
+      height: 85px;
+      border-radius: 20px;
+      margin-bottom: 15px;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+    }
+
+    .app-card h3 {
+      margin-bottom: 6px;
+      font-size: 17px;
+      color: #f8fafc;
+    }
+
+    .app-card p {
+      color: #94a3b8;
+      font-size: 13px;
+    }
+
+    .card-hot-badge {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      background: #ef4444;
+      color: #fff;
+      font-size: 11px;
+      font-weight: bold;
+      padding: 4px 8px;
+      border-radius: 8px;
+      z-index: 10;
+      box-shadow: 0 2px 5px rgba(239, 68, 68, 0.4);
+    }
+
+    .card-rating {
+      color: #fbbf24;
+      font-size: 16px;
+      margin-top: 10px;
+      font-weight: 600;
+    }
+
+    /* Modal */
+    .modal {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.85);
+      backdrop-filter: blur(5px);
+      justify-content: center;
+      align-items: center;
+      z-index: 999;
+    }
+
+    .modal-content {
+      background: #0f172a;
+      color: #f2f2f2;
+      padding: 30px;
+      border-radius: 20px;
+      width: 450px;
+      max-width: 95%;
+      position: relative;
+      border: 1px solid #334155;
+      animation: slideUp 0.3s ease;
+    }
+
+    /* Full screen mobile modal */
+    @media (max-width: 600px) {
+      .modal {
+        align-items: flex-end; /* Align to bottom for mobile feel */
+      }
+      .modal-content {
+        width: 100%;
+        max-width: 100%;
+        height: 90vh; /* Takes most of the screen */
+        border-radius: 25px 25px 0 0;
+        padding: 25px 20px;
+        overflow-y: auto;
+      }
+    }
+
+    @keyframes slideUp {
+      from { transform: translateY(50px); opacity: 0; }
+      to { transform: translateY(0); opacity: 1; }
+    }
+
+    .close-btn {
+      position: absolute;
+      top: 15px;
+      right: 20px;
+      font-size: 30px;
+      cursor: pointer;
+      color: #94a3b8;
+      transition: color 0.3s;
+    }
+
+    .close-btn:hover {
+      color: #ef4444;
+    }
+
+    .modal-header {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+      margin-bottom: 20px;
+      margin-top: 10px;
+    }
+
+    .modal-header img {
+      width: 80px;
+      height: 80px;
+      border-radius: 20px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+    }
+
+    .modal-header h2 {
+      font-size: 24px;
+      margin-bottom: 5px;
+    }
+
+    .modal-content p#modalDescription {
+      margin: 20px 0;
+      line-height: 1.6;
+      color: #cbd5e1;
+      font-size: 15px;
+    }
+
+    .detail-row {
+      display: flex;
+      justify-content: space-between;
+      margin: 20px 0;
+      background: #1e293b;
+      padding: 15px;
+      border-radius: 12px;
+      text-align: center;
+    }
+
+    .detail-row div p:first-child {
+      font-size: 18px;
+    }
+
+    .detail-label {
+      font-size: 12px;
+      color: #94a3b8;
+      margin-top: 5px;
+    }
+
+    .badge {
+      display: inline-block;
+      background: #fbbf24;
+      color: #000;
+      padding: 6px 12px;
+      border-radius: 8px;
+      margin-top: 10px;
+      font-size: 13px;
+      font-weight: 700;
+    }
+
+    .btn-group {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      margin-top: 25px;
+    }
+
+    .modal .download-btn, .modal .install-btn {
+      display: block;
+      width: 100%;
+      padding: 16px;
+      font-size: 16px;
+      font-weight: bold;
+      border: none;
+      border-radius: 12px;
+      cursor: pointer;
+      transition: all 0.3s;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    .modal .download-btn {
+      background: #10b981;
+      color: white;
+      box-shadow: 0 4px 15px rgba(16, 185, 129, 0.3);
+    }
+
+    .modal .download-btn:hover {
+      background: #059669;
+      transform: translateY(-2px);
+    }
+
+    .modal .install-btn {
+      background: #3B82F6;
+      color: white;
+      box-shadow: 0 4px 15px rgba(59, 130, 246, 0.3);
+    }
+
+    .modal .install-btn:hover {
+      background: #2563eb;
+      transform: translateY(-2px);
+    }
+
+    /* Footer */
+    .footer {
+      background: #020617;
+      color: #fff;
+      padding: 50px 20px 30px;
+      margin-top: 60px;
+      border-top: 1px solid #1e293b;
+    }
+
+    .footer-container {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 40px;
+      max-width: 1200px;
+      margin: auto;
+    }
+
+    .footer-section h2, .footer-section h3 {
+      margin-bottom: 20px;
+      font-size: 20px;
+      color: #fbbf24;
+    }
+
+    .footer-section p {
+      font-size: 14px;
+      color: #94a3b8;
+      line-height: 1.8;
+    }
+
+    .footer-section ul {
+      list-style: none;
+    }
+
+    .footer-section ul li {
+      margin: 12px 0;
+    }
+
+    .footer-section ul li a {
+      color: #cbd5e1;
+      text-decoration: none;
+      font-size: 15px;
+      transition: color 0.3s;
+    }
+
+    .footer-section ul li a:hover {
+      color: #10b981;
+    }
+
+    .footer-bottom {
+      text-align: center;
+      margin-top: 40px;
+      border-top: 1px solid #1e293b;
+      padding-top: 20px;
+      font-size: 14px;
+      color: #64748b;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="header">
+    <div class="logo"><span class="ap">SABER</span><span class="mod"> STORE</span></div>
+    <input type="text" id="searchInput" class="search-box" placeholder="Chercher les apps de profit...">
+  </div>
+
+  <div class="hero">
+    <h1>أفضل تطبيقات الربح من الإنترنت</h1>
+    <p>حمّل التطبيقات وابدأ في كسب الدراهم من هاتفك فقط</p>
+  </div>
+
+  <div class="main-content">
+    <h2 class="content-heading"><span class="sparkle">💰</span> التطبيقات الأكثر ربحاً <span class="sparkle">💰</span></h2>
+    <div class="app-grid" id="appGrid"></div>
+  </div>
+
+  <div id="modal" class="modal">
+    <div class="modal-content">
+      <span class="close-btn" onclick="closeModal()">×</span>
+      <div class="modal-header">
+        <img id="modalIcon" src="" alt="App Icon">
+        <div>
+          <h2 id="modalTitle"></h2>
+          <p id="modalDeveloper" style="color: #94a3b8; font-size: 14px;"></p>
+        </div>
+      </div>
+      <p id="modalDescription"></p>
+      <div id="modalDetails"></div>
+      <div class="btn-group">
+        <button class="download-btn" onclick="downloadAPK()"> 📥 Download APK</button>
+        <button class="install-btn" onclick="installApp()">⚡ Install Direct</button>
+      </div>
+    </div>
+  </div>
+
+  <footer class="footer">
+    <div class="footer-container">
+      <div class="footer-section">
+        <h2 class="logo"><span class="ap">SABER</span><span class="mod"> STORE</span></h2>
+        <p>SABER STORE هو منصتك الأولى لتحميل أفضل تطبيقات الربح من الإنترنت، التداول، والعمل الحر بأمان وسرعة.</p>
+      </div>
+      <div class="footer-section">
+        <h3>Services</h3>
+        <ul>
+          <li><a href="#">تطبيقات التداول</a></li>
+          <li><a href="#">تطبيقات العمل الحر</a></li>
+          <li><a href="#">ربح المال من الاستبيانات</a></li>
+          <li><a href="#">محافظ رقمية</a></li>
+        </ul>
+      </div>
+      <div class="footer-section">
+        <h3>Contact</h3>
+        <ul>
+          <li><a href="#">About Us</a></li>
+          <li><a href="#">Privacy Policy</a></li>
+          <li><a href="#">Business Cooperation</a></li>
+          <li><a href="#">Contact Us</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>© 2026 SABER STORE. All rights reserved. Make Money Online.</p>
+    </div>
+  </footer>
+
+  <script>
+    // App data (Money Making Niche)
+    const apps = {
+      Binance: {
+        title: "Binance Trading",
+        developer: "Crypto & Crypto",
+        icon: "https://ui-avatars.com/api/?name=Bi&background=F3BA2F&color=fff&size=150&bold=true",
+        rating: "4.9",
+        reviews: "1.2M",
+        size: "145 MB",
+        os: "Android 6.0+",
+        date: "Feb 28, 2026",
+        badges: ["🏆 #1 Crypto Exchange"],
+        description: "المنصة رقم واحد عالمياً لتداول العملات الرقمية (Bitcoin, Ethereum). ابدأ التداول بأقل الرسوم وحقق أرباحك الأولى.",
+        download: "https://control.kochava.com/v1/cpi/...",
+        install: "https://control.kochava.com/v1/cpi/...",
+        isHot: true
+      },
+      Upwork: {
+        title: "Upwork Freelance",
+        developer: "Upwork Global",
+        icon: "https://ui-avatars.com/api/?name=Up&background=14a800&color=fff&size=150&bold=true",
+        rating: "4.6",
+        reviews: "850k",
+        size: "52 MB",
+        os: "Android 7.0+",
+        date: "Feb 15, 2026",
+        badges: ["💼 Best for Freelancers"],
+        description: "اربح المال بالدولار من خلال تقديم مهاراتك (برمجة، تصميم، ترجمة) للعملاء في جميع أنحاء العالم.",
+        download: "https://control.kochava.com/v1/cpi/...",
+        install: "https://control.kochava.com/v1/cpi/...",
+        isHot: false
+      },
+      ExpertOption: {
+        title: "ExpertOption",
+        developer: "Finance Trading",
+        icon: "https://ui-avatars.com/api/?name=EO&background=2563eb&color=fff&size=150&bold=true",
+        rating: "4.4",
+        reviews: "320k",
+        size: "40 MB",
+        os: "Android 5.0+",
+        date: "Feb 20, 2026",
+        badges: ["📈 Fast Profit"],
+        description: "تطبيق تداول سريع وسهل للمبتدئين مع حساب تجريبي مجاني بقيمة 10,000$ لتعلم استراتيجيات الربح.",
+        download: "https://control.kochava.com/v1/cpi/...",
+        install: "https://control.kochava.com/v1/cpi/...",
+        isHot: true
+      },
+      Swagbucks: {
+        title: "Swagbucks Rewards",
+        developer: "Prodege",
+        icon: "https://ui-avatars.com/api/?name=SB&background=3b82f6&color=fff&size=150&bold=true",
+        rating: "4.3",
+        reviews: "500k",
+        size: "35 MB",
+        os: "Android 5.0+",
+        date: "Jan 10, 2026",
+        badges: [],
+        description: "اربح بطاقات هدايا ورصيد PayPal مجاناً عن طريق مشاهدة الفيديوهات، الإجابة على الاستبيانات، وتجربة التطبيقات.",
+        download: "https://control.kochava.com/v1/cpi/...",
+        install: "https://control.kochava.com/v1/cpi/...",
+        isHot: false
+      },
+      Fiverr: {
+        title: "Fiverr Freelance",
+        developer: "Fiverr Int",
+        icon: "https://ui-avatars.com/api/?name=Fi&background=1dbf73&color=fff&size=150&bold=true",
+        rating: "4.8",
+        reviews: "950k",
+        size: "60 MB",
+        os: "Android 6.0+",
+        date: "Feb 25, 2026",
+        badges: ["🚀 Top Earners"],
+        description: "اعرض خدماتك المصغرة ابتداءً من 5 دولار واربح آلاف الدراهم شهرياً من منزلك.",
+        download: "https://control.kochava.com/v1/cpi/...",
+        install: "https://control.kochava.com/v1/cpi/...",
+        isHot: false
+      },
+      PayPal: {
+        title: "PayPal Wallet",
+        developer: "PayPal Mobile",
+        icon: "https://ui-avatars.com/api/?name=PP&background=003087&color=fff&size=150&bold=true",
+        rating: "4.7",
+        reviews: "3M+",
+        size: "95 MB",
+        os: "Android 7.0+",
+        date: "Jan 21, 2026",
+        badges: ["🏦 Secure Payment"],
+        description: "المحفظة الأساسية لاستقبال أرباحك من الإنترنت بأمان وسحبها إلى حسابك البنكي المغربي.",
+        download: "https://control.kochava.com/v1/cpi/...",
+        install: "https://control.kochava.com/v1/cpi/...",
+        isHot: false
+      }
+    };
+
+    let currentApp = null;
+
+    function renderStars(rating) {
+      const fullStars = Math.floor(rating);
+      const hasHalfStar = rating % 1 >= 0.5;
+      let starsHtml = '';
+      for (let i = 0; i < fullStars; i++) {
+        starsHtml += '★';
+      }
+      if (hasHalfStar) {
+        starsHtml += '½';
+      }
+      const emptyStars = 5 - fullStars - (hasHalfStar ? 1 : 0);
+      for (let i = 0; i < emptyStars; i++) {
+        starsHtml += '<span style="color:#475569">★</span>';
+      }
+      return starsHtml;
+    }
+
+    function renderApps(filter = "") {
+      const grid = document.getElementById("appGrid");
+      grid.innerHTML = "";
+      const search = filter.toLowerCase();
+
+      Object.keys(apps).forEach(key => {
+        const app = apps[key];
+        if (app.title.toLowerCase().includes(search) || app.developer.toLowerCase().includes(search)) {
+          const card = document.createElement("div");
+          card.className = "app-card";
+          card.onclick = () => openModal(key);
+
+          let hotBadge = '';
+          if (app.isHot) {
+            hotBadge = '<div class="card-hot-badge">HOT 🔥</div>';
+          }
+
+          card.innerHTML = `
+            ${hotBadge}
+            <img src="${app.icon}" alt="${app.title}">
+            <h3>${app.title}</h3>
+            <p>${app.developer}</p>
+            <div class="card-rating">${renderStars(parseFloat(app.rating))} <span style="font-size:14px; color:#94a3b8;">${app.rating}</span></div>
+          `;
+          grid.appendChild(card);
+        }
+      });
+    }
+
+    function openModal(appName) {
+      const app = apps[appName];
+      if (!app) return;
+      currentApp = app;
+
+      document.getElementById('modalTitle').textContent = app.title;
+      document.getElementById('modalDeveloper').textContent = app.developer;
+      document.getElementById('modalIcon').src = app.icon;
+      document.getElementById('modalDescription').textContent = app.description;
+
+      const detailsDiv = document.getElementById('modalDetails');
+      detailsDiv.innerHTML = `
+        <div class="detail-row">
+          <div><p><strong>${app.rating} ★</strong></p><p class="detail-label">${app.reviews} Avis</p></div>
+          <div><p><strong>${app.size}</strong></p><p class="detail-label">Taille</p></div>
+          <div><p><strong>${app.os}</strong></p><p class="detail-label">Système</p></div>
+        </div>
+      `;
+
+      app.badges.forEach(badge => {
+        const badgeEl = document.createElement('div');
+        badgeEl.className = 'badge';
+        badgeEl.textContent = badge;
+        detailsDiv.appendChild(badgeEl);
+      });
+
+      document.getElementById('modal').style.display = 'flex';
+      document.body.style.overflow = 'hidden'; // Prevent background scrolling
+    }
+
+    function closeModal() {
+      document.getElementById('modal').style.display = 'none';
+      document.body.style.overflow = 'auto'; // Restore scrolling
+      currentApp = null;
+    }
+
+    // Close modal if user clicks outside of the content
+    window.onclick = function(event) {
+      const modal = document.getElementById('modal');
+      if (event.target == modal) {
+        closeModal();
+      }
+    }
+
+    function downloadAPK() {
+      if (currentApp && currentApp.download) {
+        window.open(currentApp.download, "_blank");
+      } else {
+        alert("Lien de téléchargement non disponible.");
+      }
+    }
+
+    function installApp() {
+      if (currentApp && currentApp.install) {
+        window.open(currentApp.install, "_blank");
+      } else {
+        alert("Lien d'installation non disponible.");
+      }
+    }
+
+    // Search filter
+    document.getElementById("searchInput").addEventListener("input", e => {
+      renderApps(e.target.value);
     });
 
-    /* ══ CLOSE ══ */
-    document.getElementById('btnClose').addEventListener('click', closeModal);
-    document.getElementById('overlay').addEventListener('click', e => { if (e.target.id === 'overlay') closeModal(); });
-
-    /* ══ INIT ══ */
+    // Initial render
     renderApps();
   </script>
 </body>
+
 </html>
