@@ -1,204 +1,254 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
 <title>Saber Code Generat</title>
 
 <script src="https://cdn.tailwindcss.com"></script>
 
 <style>
-    body {
-        background: #000;
-        overflow: hidden;
-    }
+body{
+    margin:0;
+    background:#000;
+    overflow:hidden;
+    font-family:sans-serif;
+}
 
-    /* Gold gradient text */
-    .gold-text {
-        background: linear-gradient(90deg,#bf953f,#fcf6ba,#aa771c);
-        -webkit-background-clip: text;
-        -webkit-text-fill-color: transparent;
-    }
+/* GOLD TEXT */
+.gold-text{
+    background:linear-gradient(90deg,#bf953f,#fcf6ba,#aa771c);
+    -webkit-background-clip:text;
+    -webkit-text-fill-color:transparent;
+}
 
-    /* Glassmorphism */
-    .glass-box {
-        background: rgba(255,255,255,0.05);
-        backdrop-filter: blur(20px);
-        border: 1px solid rgba(191,149,63,0.4);
-        box-shadow: 0 0 40px rgba(191,149,63,0.15);
-    }
+/* GLASS BOX */
+.glass-box{
+    background:rgba(255,255,255,0.06);
+    backdrop-filter:blur(30px);
+    border:1px solid rgba(191,149,63,0.6);
+    box-shadow:0 0 80px rgba(191,149,63,0.25);
+}
 
-    /* Gold button */
-    .gold-btn {
-        background: linear-gradient(90deg,#bf953f,#fcf6ba,#aa771c);
-        color: black;
-        font-weight: bold;
-        transition: 0.3s ease;
-    }
+/* PREMIUM BUTTON */
+.premium-btn{
+    position:relative;
+    padding:14px;
+    border-radius:14px;
+    font-weight:bold;
+    letter-spacing:1px;
+    overflow:hidden;
+    transition:0.4s;
+}
 
-    .gold-btn:hover {
-        transform: scale(1.05);
-        box-shadow: 0 0 20px #bf953f;
-    }
+.premium-btn::before{
+    content:"";
+    position:absolute;
+    inset:0;
+    background:linear-gradient(90deg,#bf953f,#fcf6ba,#aa771c);
+    z-index:-1;
+    transition:0.4s;
+}
 
-    /* Progress Bar */
-    .progress-bar {
-        background: linear-gradient(90deg,#bf953f,#fcf6ba,#aa771c);
-        height: 6px;
-        transition: width 1s linear;
-    }
+.premium-btn:hover{
+    transform:translateY(-3px);
+    box-shadow:0 10px 25px rgba(191,149,63,0.6);
+}
 
-    canvas {
-        position: fixed;
-        top:0;
-        left:0;
-        z-index:0;
-    }
+.premium-btn:active{
+    transform:scale(0.97);
+}
+
+/* GET KEY BUTTON SPECIAL */
+.key-btn{
+    background:transparent;
+    border:1px solid #bf953f;
+    color:#fcf6ba;
+    margin-top:12px;
+    padding:12px;
+    border-radius:12px;
+    transition:0.4s;
+}
+
+.key-btn:hover{
+    background:linear-gradient(90deg,#bf953f,#fcf6ba,#aa771c);
+    color:black;
+    box-shadow:0 0 20px #bf953f;
+}
+
+/* PROGRESS */
+.progress-bar{
+    background:linear-gradient(90deg,#bf953f,#fcf6ba,#aa771c);
+    height:6px;
+    transition:width 1s linear;
+}
+
+/* TOAST ALERT */
+.toast{
+    position:fixed;
+    bottom:30px;
+    left:50%;
+    transform:translateX(-50%);
+    background:#111;
+    border:1px solid #bf953f;
+    padding:12px 20px;
+    border-radius:10px;
+    color:#fcf6ba;
+    box-shadow:0 0 20px rgba(191,149,63,0.6);
+    opacity:0;
+    transition:0.4s;
+    z-index:999;
+}
+
+.toast.show{
+    opacity:1;
+}
+
+canvas{
+    position:fixed;
+    top:0;
+    left:0;
+    z-index:0;
+}
 </style>
 </head>
-<body class="flex items-center justify-center min-h-screen relative text-white">
+
+<body class="flex items-center justify-center h-screen w-screen text-white relative">
 
 <canvas id="particles"></canvas>
 
-<div class="glass-box relative z-10 w-[90%] max-w-md p-8 rounded-2xl text-center">
+<div class="glass-box relative z-10 w-[92%] max-w-sm p-8 rounded-3xl text-center">
 
-    <h1 class="text-3xl font-bold mb-6 gold-text tracking-widest">
-        Saber Code Generat
-    </h1>
+<h1 class="text-2xl font-bold mb-6 gold-text tracking-widest">
+Saber Code Generat
+</h1>
 
-    <!-- Step 1 -->
-    <div id="stepInput">
-        <input 
-            id="accessCode"
-            type="text"
-            placeholder="Enter Access Code"
-            class="w-full p-3 rounded-lg bg-black/60 border border-yellow-700 text-center outline-none mb-4"
-        />
-        <button id="verifyBtn" class="gold-btn w-full py-3 rounded-lg">
-            VERIFY
-        </button>
-    </div>
+<div id="stepInput">
+<input id="accessCode" type="text"
+placeholder="Enter Access Code"
+class="w-full p-3 rounded-xl bg-black/60 border border-yellow-700 text-center outline-none mb-4">
 
-    <!-- Step 2 -->
-    <div id="stepTimer" class="hidden">
-        <div class="text-6xl font-bold gold-text mb-6" id="countdown">
-            10
-        </div>
-        <div class="w-full bg-black/40 rounded-full">
-            <div id="progress" class="progress-bar w-0 rounded-full"></div>
-        </div>
-    </div>
+<button id="verifyBtn" class="premium-btn w-full text-black">
+VERIFY
+</button>
 
-    <!-- Step 3 -->
-    <div id="stepLink" class="hidden">
-        <button id="goLink" class="gold-btn w-full py-3 rounded-lg">
-            GO TO LINK
-        </button>
-    </div>
+<a href="https://wa.me/212769356031?text=GIVE%20ME%20CODE%20ACCESS%20FOR%20YOUR%20APP"
+target="_blank"
+class="key-btn block">
+GET KEY
+</a>
 
 </div>
 
-<script type="module">
-import { verifyCode, getTargetLink } from './api/linkandcode.js';
+<div id="stepTimer" class="hidden">
+<div class="text-5xl font-bold gold-text mb-6" id="countdown">10</div>
+<div class="w-full bg-black/40 rounded-full">
+<div id="progress" class="progress-bar w-0 rounded-full"></div>
+</div>
+</div>
 
-const input = document.getElementById('accessCode');
-const verifyBtn = document.getElementById('verifyBtn');
-const stepInput = document.getElementById('stepInput');
-const stepTimer = document.getElementById('stepTimer');
-const stepLink = document.getElementById('stepLink');
-const countdownEl = document.getElementById('countdown');
-const progressBar = document.getElementById('progress');
-const goLinkBtn = document.getElementById('goLink');
+<div id="stepLink" class="hidden">
+<button id="goLink" class="premium-btn w-full text-black">
+GO TO LINK
+</button>
+</div>
 
-verifyBtn.addEventListener('click', () => {
-    const value = input.value.trim();
+</div>
 
-    if (verifyCode(value)) {
+<div id="toast" class="toast"></div>
+
+<script>
+const encodedAccessCode="U0FCRVIyMDI0";
+const encodedTargetLink="aHR0cHM6Ly93d3cuZXhhbXBsZS5jb20=";
+const decode=v=>atob(v);
+
+const input=document.getElementById("accessCode");
+const verifyBtn=document.getElementById("verifyBtn");
+const stepInput=document.getElementById("stepInput");
+const stepTimer=document.getElementById("stepTimer");
+const stepLink=document.getElementById("stepLink");
+const countdownEl=document.getElementById("countdown");
+const progressBar=document.getElementById("progress");
+const goLinkBtn=document.getElementById("goLink");
+const toast=document.getElementById("toast");
+
+function showToast(message){
+    toast.textContent=message;
+    toast.classList.add("show");
+    setTimeout(()=>toast.classList.remove("show"),2500);
+}
+
+verifyBtn.addEventListener("click",()=>{
+    if(input.value.trim()===decode(encodedAccessCode)){
         startTimer();
-    } else {
-        input.classList.add("border-red-500");
-        setTimeout(() => input.classList.remove("border-red-500"), 1500);
+    }else{
+        showToast("Invalid Access Code");
     }
 });
 
-function startTimer() {
+function startTimer(){
     stepInput.classList.add("hidden");
     stepTimer.classList.remove("hidden");
 
-    let timeLeft = 10;
-    countdownEl.textContent = timeLeft;
+    let timeLeft=10;
+    countdownEl.textContent=timeLeft;
 
-    const interval = setInterval(() => {
+    const interval=setInterval(()=>{
         timeLeft--;
-        countdownEl.textContent = timeLeft;
-        progressBar.style.width = ((10 - timeLeft) * 10) + "%";
+        countdownEl.textContent=timeLeft;
+        progressBar.style.width=((10-timeLeft)*10)+"%";
 
-        if (timeLeft <= 0) {
+        if(timeLeft<=0){
             clearInterval(interval);
             stepTimer.classList.add("hidden");
             stepLink.classList.remove("hidden");
         }
-    }, 1000);
+    },1000);
 }
 
-goLinkBtn.addEventListener('click', () => {
-    window.location.href = getTargetLink();
+goLinkBtn.addEventListener("click",()=>{
+    window.location.href=decode(encodedTargetLink);
 });
 
-/* ===========================
-   Gold Dust Particle System
-=========================== */
+/* PARTICLES */
+const canvas=document.getElementById("particles");
+const ctx=canvas.getContext("2d");
+canvas.width=window.innerWidth;
+canvas.height=window.innerHeight;
 
-const canvas = document.getElementById("particles");
-const ctx = canvas.getContext("2d");
-
-canvas.width = window.innerWidth;
-canvas.height = window.innerHeight;
-
-window.addEventListener("resize", () => {
-    canvas.width = window.innerWidth;
-    canvas.height = window.innerHeight;
+window.addEventListener("resize",()=>{
+canvas.width=window.innerWidth;
+canvas.height=window.innerHeight;
 });
 
-let particles = [];
-
-class Particle {
-    constructor() {
-        this.x = Math.random() * canvas.width;
-        this.y = Math.random() * canvas.height;
-        this.radius = Math.random() * 2;
-        this.speedY = Math.random() * 0.5 + 0.2;
-    }
-
-    update() {
-        this.y -= this.speedY;
-        if (this.y < 0) {
-            this.y = canvas.height;
-            this.x = Math.random() * canvas.width;
-        }
-    }
-
-    draw() {
-        ctx.beginPath();
-        ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
-        ctx.fillStyle = "rgba(191,149,63,0.8)";
-        ctx.fill();
-    }
+let particles=[];
+class Particle{
+constructor(){
+this.x=Math.random()*canvas.width;
+this.y=Math.random()*canvas.height;
+this.radius=Math.random()*2;
+this.speedY=Math.random()*0.6+0.2;
 }
-
-for (let i = 0; i < 120; i++) {
-    particles.push(new Particle());
+update(){
+this.y-=this.speedY;
+if(this.y<0){
+this.y=canvas.height;
+this.x=Math.random()*canvas.width;
 }
-
-function animate() {
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
-    particles.forEach(p => {
-        p.update();
-        p.draw();
-    });
-    requestAnimationFrame(animate);
 }
-
+draw(){
+ctx.beginPath();
+ctx.arc(this.x,this.y,this.radius,0,Math.PI*2);
+ctx.fillStyle="rgba(191,149,63,0.8)";
+ctx.fill();
+}
+}
+for(let i=0;i<140;i++){particles.push(new Particle());}
+function animate(){
+ctx.clearRect(0,0,canvas.width,canvas.height);
+particles.forEach(p=>{p.update();p.draw();});
+requestAnimationFrame(animate);
+}
 animate();
 </script>
 
